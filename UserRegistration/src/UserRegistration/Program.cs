@@ -1,3 +1,5 @@
+using Amazon.DynamoDBv2;
+using Amazon.DynamoDBv2.DataModel;
 using UserRegistration.Config;
 using UserRegistration.Repositories;
 using UserRegistration.Services;
@@ -11,6 +13,8 @@ services.AddControllers();
 // Add AWS Lambda support. When application is run in Lambda Kestrel is swapped out as the web server with Amazon.Lambda.AspNetCoreServer. This
 // package will act as the webserver translating request and responses between the Lambda event source and ASP.NET Core.
 services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
+services.AddAWSService<IAmazonDynamoDB>();
+services.AddSingleton<IDynamoDBContext, DynamoDBContext>();
 
 UserValidatorConfig userValidatorConfig = new();
 config.GetSection("UserValidatorConfig").Bind(userValidatorConfig);

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using UserRegistration.Models;
 
 namespace UserRegistration.Repositories;
 

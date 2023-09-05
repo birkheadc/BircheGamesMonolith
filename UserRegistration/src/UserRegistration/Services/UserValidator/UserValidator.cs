@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using UserRegistration.Config;
 using UserRegistration.Models;
 
@@ -14,7 +15,10 @@ public class UserValidator : IUserValidator
 
   public bool Validate(UserCreateRequestDTO user)
   {
-    // Todo
+    if (user.Password != user.RepeatPassword) return false;
+    if (user.Password.Length < config.PasswordMinChars) return false;
+    if (user.Password.Length > config.PasswordMaxChars) return false;
+    if (Regex.IsMatch(user.Username, config.UsernameRegex) == false) return false;
     return true;
   }
 }
