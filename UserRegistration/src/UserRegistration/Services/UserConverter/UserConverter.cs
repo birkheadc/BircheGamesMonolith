@@ -1,3 +1,4 @@
+using Domain.Models;
 using UserRegistration.Models;
 
 namespace UserRegistration.Services;
@@ -14,7 +15,7 @@ public class UserConverter : IUserConverter
   {
     return new UserEntity()
     {
-      Id = Guid.NewGuid(),
+      Id = Guid.NewGuid().ToString(),
       Username = createRequestDTO.Username,
       PasswordHash = passwordHasher.HashPassword(createRequestDTO.Password),
       Role = UserRole.USER,

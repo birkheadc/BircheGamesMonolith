@@ -1,0 +1,14 @@
+/home/colby/dev/birchegames/new/Domain/bin/Release/net6.0/Domain.deps.json
+/home/colby/dev/birchegames/new/Domain/bin/Release/net6.0/Domain.runtimeconfig.json
+/home/colby/dev/birchegames/new/Domain/bin/Release/net6.0/Domain.dll
+/home/colby/dev/birchegames/new/Domain/bin/Release/net6.0/ref/Domain.dll
+/home/colby/dev/birchegames/new/Domain/bin/Release/net6.0/Domain.pdb
+/home/colby/dev/birchegames/new/Domain/obj/Release/net6.0/Domain.csproj.AssemblyReference.cache
+/home/colby/dev/birchegames/new/Domain/obj/Release/net6.0/Domain.GeneratedMSBuildEditorConfig.editorconfig
+/home/colby/dev/birchegames/new/Domain/obj/Release/net6.0/Domain.AssemblyInfoInputs.cache
+/home/colby/dev/birchegames/new/Domain/obj/Release/net6.0/Domain.AssemblyInfo.cs
+/home/colby/dev/birchegames/new/Domain/obj/Release/net6.0/Domain.csproj.CoreCompileInputs.cache
+/home/colby/dev/birchegames/new/Domain/obj/Release/net6.0/Domain.dll
+/home/colby/dev/birchegames/new/Domain/obj/Release/net6.0/ref/Domain.dll
+/home/colby/dev/birchegames/new/Domain/obj/Release/net6.0/Domain.pdb
+/home/colby/dev/birchegames/new/Domain/obj/Release/net6.0/Domain.genruntimeconfig.cache

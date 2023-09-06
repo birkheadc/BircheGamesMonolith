@@ -5,14 +5,14 @@ namespace Domain.Models;
 [DynamoDBTable("BircheGames_Users")]
 public class UserEntity
 {
-  [DynamoDBHashKey("id")]
-  public Guid? Id { get; init; }
-  [DynamoDBProperty("username")]
+  [DynamoDBHashKey("Id")]
+  public string? Id { get; init; }
+  [DynamoDBGlobalSecondaryIndexHashKey("Username")]
   public string? Username { get; init; }
-  [DynamoDBProperty("passwordHash")]
+  [DynamoDBProperty("PasswordHash")]
   public string? PasswordHash { get; init; }
-  [DynamoDBProperty("role")]
+  [DynamoDBProperty("Role")]
   public UserRole Role { get; init; }
-  [DynamoDBProperty("isEmailVerified")]
+  [DynamoDBProperty("IsEmailVerified")]
   public bool IsEmailVerified { get; init; }
 }

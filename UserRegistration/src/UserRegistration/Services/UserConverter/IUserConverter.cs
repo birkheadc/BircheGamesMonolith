@@ -1,3 +1,4 @@
+using Domain.Models;
 using UserRegistration.Models;
 
 namespace UserRegistration.Services;

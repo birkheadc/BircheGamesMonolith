@@ -1,3 +1,4 @@
+using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using UserRegistration.Models;
 using UserRegistration.Repositories;
