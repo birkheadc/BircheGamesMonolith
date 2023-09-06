@@ -14,7 +14,6 @@ services.AddControllers();
 // package will act as the webserver translating request and responses between the Lambda event source and ASP.NET Core.
 services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
 services.AddAWSService<IAmazonDynamoDB>();
-services.AddSingleton<IDynamoDBContext, DynamoDBContext>();
 
 UserValidatorConfig userValidatorConfig = new();
 config.GetSection("UserValidatorConfig").Bind(userValidatorConfig);
