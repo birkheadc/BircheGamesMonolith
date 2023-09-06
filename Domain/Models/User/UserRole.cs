@@ -1,3 +1,5 @@
+namespace Domain.Models;
+
 public enum UserRole
 {
   USER = 0,

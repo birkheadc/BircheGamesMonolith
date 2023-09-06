@@ -1,3 +1,7 @@
+using Domain.Models;
+
+namespace UserRegistration.Models;
+
 public class UserResponseDTO
 {
   public Guid? Id { get; init; }

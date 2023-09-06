@@ -1,6 +1,6 @@
 using Amazon.DynamoDBv2.DataModel;
 
-namespace UserRegistration.Models;
+namespace Domain.Models;
 
 [DynamoDBTable("BircheGames_Users")]
 public class UserEntity

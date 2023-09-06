@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Amazon.DynamoDBv2.DataModel;
 using UserRegistration.Models;
 using Amazon.DynamoDBv2;
+using Domain.Models;
 
 namespace UserRegistration.Repositories;
 
