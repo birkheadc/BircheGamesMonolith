@@ -8,25 +8,27 @@
     ".NETCoreApp,Version=v6.0": {
       "Domain/1.0.0": {
         "dependencies": {
-          "AWSSDK.Core": "3.7.202.2",
+          "AWSSDK.Core": "3.7.202.3",
           "AWSSDK.DynamoDBv2": "3.7.201.4",
-          "AWSSDK.Extensions.NETCore.Setup": "3.7.7"
+          "AWSSDK.Extensions.NETCore.Setup": "3.7.7",
+          "AWSSDK.SecretsManager": "3.7.201.19",
+          "BCrypt.Net-Next": "4.0.3"
         },
         "runtime": {
           "Domain.dll": {}
         }
       },
-      "AWSSDK.Core/3.7.202.2": {
+      "AWSSDK.Core/3.7.202.3": {
         "runtime": {
           "lib/netcoreapp3.1/AWSSDK.Core.dll": {
             "assemblyVersion": "3.3.0.0",
-            "fileVersion": "3.7.202.2"
+            "fileVersion": "3.7.202.3"
           }
         }
       },
       "AWSSDK.DynamoDBv2/3.7.201.4": {
         "dependencies": {
-          "AWSSDK.Core": "3.7.202.2"
+          "AWSSDK.Core": "3.7.202.3"
         },
         "runtime": {
           "lib/netcoreapp3.1/AWSSDK.DynamoDBv2.dll": {
@@ -37,7 +39,7 @@
       },
       "AWSSDK.Extensions.NETCore.Setup/3.7.7": {
         "dependencies": {
-          "AWSSDK.Core": "3.7.202.2",
+          "AWSSDK.Core": "3.7.202.3",
           "Microsoft.Extensions.Configuration.Abstractions": "2.0.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "2.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "2.0.0"
@@ -46,6 +48,25 @@
           "lib/netstandard2.0/AWSSDK.Extensions.NETCore.Setup.dll": {
             "assemblyVersion": "3.3.0.0",
             "fileVersion": "3.7.7.0"
+          }
+        }
+      },
+      "AWSSDK.SecretsManager/3.7.201.19": {
+        "dependencies": {
+          "AWSSDK.Core": "3.7.202.3"
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/AWSSDK.SecretsManager.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.7.201.19"
+          }
+        }
+      },
+      "BCrypt.Net-Next/4.0.3": {
+        "runtime": {
+          "lib/net6.0/BCrypt.Net-Next.dll": {
+            "assemblyVersion": "4.0.3.0",
+            "fileVersion": "4.0.3.0"
           }
         }
       },
@@ -96,12 +117,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "AWSSDK.Core/3.7.202.2": {
+    "AWSSDK.Core/3.7.202.3": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-LtfHJniVW3Z74oQRqup6T3WjqNGjIrxtz8WAd0jlxJmOZHOXw4x2cQ+QZVTouzQ0H/2yAEJduc6CO4f8XPgrmg==",
-      "path": "awssdk.core/3.7.202.2",
-      "hashPath": "awssdk.core.3.7.202.2.nupkg.sha512"
+      "sha512": "sha512-6D1t4ZW3kYOr/8yIklOWL6+IMTCZQaYy2wMSPf9ZlNaWdkmWoYynccNh0EKN7kWnJ8jrUoYhk/J9f/oRz2HXug==",
+      "path": "awssdk.core/3.7.202.3",
+      "hashPath": "awssdk.core.3.7.202.3.nupkg.sha512"
     },
     "AWSSDK.DynamoDBv2/3.7.201.4": {
       "type": "package",
@@ -116,6 +137,20 @@
       "sha512": "sha512-jz7BRX6pUVJqvULIfdMdG2apcI1loh4kodyM/9ypHdlTers0OlPVshPBpUVA8WsSygIVa5evU8tZk4SdbSRCDg==",
       "path": "awssdk.extensions.netcore.setup/3.7.7",
       "hashPath": "awssdk.extensions.netcore.setup.3.7.7.nupkg.sha512"
+    },
+    "AWSSDK.SecretsManager/3.7.201.19": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-iwNMovJJWoxO+n7/LX9qeTtxKmbPoL+dxd0rQyjGoGVWzOnZoWCuHrkwM4+yNVnkKje+kYdntr6WHQZi3cN/Yg==",
+      "path": "awssdk.secretsmanager/3.7.201.19",
+      "hashPath": "awssdk.secretsmanager.3.7.201.19.nupkg.sha512"
+    },
+    "BCrypt.Net-Next/4.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-W+U9WvmZQgi5cX6FS5GDtDoPzUCV4LkBLkywq/kRZhuDwcbavOzcDAr3LXJFqHUi952Yj3LEYoWW0jbEUQChsA==",
+      "path": "bcrypt.net-next/4.0.3",
+      "hashPath": "bcrypt.net-next.4.0.3.nupkg.sha512"
     },
     "Microsoft.Extensions.Configuration.Abstractions/2.0.0": {
       "type": "package",

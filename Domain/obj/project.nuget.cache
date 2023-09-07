@@ -1,12 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "Btr/zk1ls2HPC5A9eO42tyynDdJvu6J6rw3+PaSt1rkpvBg/Y2hEtevKpRPZJGgwToCR+kAKvG6/2F56/9nt3Q==",
+  "dgSpecHash": "MH68DxbOHhUx1f2lG2BIHATwdOlDN9eRwuSSDJMUc68+ozxDgB9WuH+QzchKR488uQjRpVhoqSbmILA9RNfl2Q==",
   "success": true,
   "projectFilePath": "/home/colby/dev/birchegames/new/Domain/Domain.csproj",
   "expectedPackageFiles": [
-    "/home/colby/.nuget/packages/awssdk.core/3.7.202.2/awssdk.core.3.7.202.2.nupkg.sha512",
+    "/home/colby/.nuget/packages/awssdk.core/3.7.202.3/awssdk.core.3.7.202.3.nupkg.sha512",
     "/home/colby/.nuget/packages/awssdk.dynamodbv2/3.7.201.4/awssdk.dynamodbv2.3.7.201.4.nupkg.sha512",
     "/home/colby/.nuget/packages/awssdk.extensions.netcore.setup/3.7.7/awssdk.extensions.netcore.setup.3.7.7.nupkg.sha512",
+    "/home/colby/.nuget/packages/awssdk.secretsmanager/3.7.201.19/awssdk.secretsmanager.3.7.201.19.nupkg.sha512",
+    "/home/colby/.nuget/packages/bcrypt.net-next/4.0.3/bcrypt.net-next.4.0.3.nupkg.sha512",
     "/home/colby/.nuget/packages/microsoft.extensions.configuration.abstractions/2.0.0/microsoft.extensions.configuration.abstractions.2.0.0.nupkg.sha512",
     "/home/colby/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/2.0.0/microsoft.extensions.dependencyinjection.abstractions.2.0.0.nupkg.sha512",
     "/home/colby/.nuget/packages/microsoft.extensions.logging.abstractions/2.0.0/microsoft.extensions.logging.abstractions.2.0.0.nupkg.sha512",

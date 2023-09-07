@@ -18,14 +18,14 @@ public class UserRepository : IUserRepository
     };
     context = new DynamoDBContext(amazonDynamoDB, config);
   }
-  public async Task<UserEntity?> GetUserByCredentials(Credentials credentials)
+  public async Task<UserEntity?> GetUserByUsername(string username)
   {
     DynamoDBOperationConfig config = new()
     {
       IndexName = "Username-index"
     };
 
-    List<UserEntity> users = await context.QueryAsync<UserEntity>(credentials.Username, config).GetRemainingAsync();
+    List<UserEntity> users = await context.QueryAsync<UserEntity>(username, config).GetRemainingAsync();
 
     if (users.Count < 1) return null;
     if (users.Count > 1)
@@ -34,8 +34,6 @@ public class UserRepository : IUserRepository
       Console.WriteLine("Found more than 1 user with the same username!");
       return null;
     }
-
-    // Todo: Check password you idiot
 
     return users[0];
   }

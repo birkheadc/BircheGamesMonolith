@@ -40,7 +40,7 @@
           "dependencies": {
             "AWSSDK.Core": {
               "target": "Package",
-              "version": "[3.7.202.2, )"
+              "version": "[3.7.202.3, )"
             },
             "AWSSDK.DynamoDBv2": {
               "target": "Package",
@@ -49,6 +49,14 @@
             "AWSSDK.Extensions.NETCore.Setup": {
               "target": "Package",
               "version": "[3.7.7, )"
+            },
+            "AWSSDK.SecretsManager": {
+              "target": "Package",
+              "version": "[3.7.201.19, )"
+            },
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
             }
           },
           "imports": [

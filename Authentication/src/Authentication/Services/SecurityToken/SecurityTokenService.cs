@@ -9,11 +9,13 @@ public class SecurityTokenService : ISecurityTokenService
 {
   private readonly IUserRepository userRepository;
   private readonly ISecurityTokenGenerator securityTokenGenerator;
+  private readonly IPasswordValidator passwordValidator;
 
-  public SecurityTokenService(IUserRepository userRepository, ISecurityTokenGenerator securityTokenGenerator)
+  public SecurityTokenService(IUserRepository userRepository, ISecurityTokenGenerator securityTokenGenerator, IPasswordValidator passwordValidator)
   {
     this.userRepository = userRepository;
     this.securityTokenGenerator = securityTokenGenerator;
+    this.passwordValidator = passwordValidator;
   }
 
   public async Task<ActionResult<SecurityTokenWrapper>> AuthenticateUser(Credentials credentials)
@@ -21,7 +23,7 @@ public class SecurityTokenService : ISecurityTokenService
     UserEntity? user = null;
     try
     {
-      user = await userRepository.GetUserByCredentials(credentials);
+      user = await userRepository.GetUserByUsername(credentials.Username);
     }
     catch (Exception e)
     {
@@ -31,8 +33,10 @@ public class SecurityTokenService : ISecurityTokenService
       return new StatusCodeResult(500);
     }
 
-    if (user == null) return new StatusCodeResult(401);
+    if (user == null || user.PasswordHash is null) return new StatusCodeResult(401);
 
+    if (passwordValidator.Validate(credentials.Password, user.PasswordHash) == false) return new StatusCodeResult(401);
+    
     try
     {
       SecurityTokenWrapper securityTokenWrapper = securityTokenGenerator.GenerateTokenForUser(user);

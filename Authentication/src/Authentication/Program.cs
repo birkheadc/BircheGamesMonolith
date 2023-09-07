@@ -2,6 +2,7 @@ using Amazon.DynamoDBv2;
 using Authentication.Services;
 using Authentication.Repositories;
 using Authentication.Config;
+using Domain.Config;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -17,9 +18,12 @@ services.AddAWSService<IAmazonDynamoDB>();
 
 SecurityTokenConfig securityTokenConfig = new();
 config.GetSection("SecurityTokenConfig").Bind(securityTokenConfig);
+securityTokenConfig.SecretKey = AmazonSecretRetriever.GetAuthenticationSecret();
 services.AddSingleton(securityTokenConfig);
+
 // Todo: AWS secret handling for security token config
 
+services.AddSingleton<IPasswordValidator, PasswordValidator>();
 services.AddSingleton<ISecurityTokenGenerator, SecurityTokenGenerator>();
 services.AddSingleton<ISecurityTokenService, SecurityTokenService>();
 services.AddSingleton<IUserRepository, UserRepository>();

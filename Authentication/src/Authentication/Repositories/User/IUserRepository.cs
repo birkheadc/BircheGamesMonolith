@@ -5,5 +5,5 @@ using Domain.Models;
 
 public interface IUserRepository
 {
-   public Task<UserEntity?> GetUserByCredentials(Credentials credentials);
+   public Task<UserEntity?> GetUserByUsername(string username);
 }
