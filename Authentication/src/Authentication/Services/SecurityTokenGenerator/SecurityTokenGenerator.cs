@@ -29,8 +29,10 @@ public class SecurityTokenGenerator : ISecurityTokenGenerator
 
   private SecurityTokenDescriptor GetSecurityTokenDescriptor(UserEntity user)
   {
-    Dictionary<string, object> claims = new();
-    claims.Add("user", user);
+    Dictionary<string, object> claims = new()
+    {
+      { "user", GeneratePayloadForUser(user) }
+    };
     return new SecurityTokenDescriptor()
     {
       Expires = DateTime.UtcNow.AddHours(config.LifespanHours),
@@ -41,6 +43,17 @@ public class SecurityTokenGenerator : ISecurityTokenGenerator
         SecurityAlgorithms.HmacSha512Signature
       ),
       Claims = claims
+    };
+  }
+
+  private SecurityTokenPayload GeneratePayloadForUser(UserEntity user)
+  {
+    return new SecurityTokenPayload()
+    {
+      Id = user.Id,
+      Username = user.Username,
+      Role = user.Role,
+      IsEmailVerified = user.IsEmailVerified
     };
   }
 }
