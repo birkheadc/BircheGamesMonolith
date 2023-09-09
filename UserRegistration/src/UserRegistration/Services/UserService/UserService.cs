@@ -18,14 +18,22 @@ public class UserService : IUserService
     this.userRepository = userRepository;
   }
 
-  public async Task<ActionResult<UserResponseDTO>> CreateNewUser(UserCreateRequestDTO newUser)
+  public async Task<CreateUserResponse> CreateNewUser(CreateUserRequestDTO newUser)
   {
-    if (userValidator.Validate(newUser) == false)
+    List<CreateUserError> errors = userValidator.Validate(newUser);
+    if (errors.Count > 0)
     {
-      return new StatusCodeResult(422);
+      return new CreateUserResponse(){
+        WasSuccess = false,
+        Errors = errors
+      };
     }
     UserEntity entity = userConverter.ToEntity(newUser);
-    StatusCodeResult result = await userRepository.CreateNewUser(entity);
-    return (result.StatusCode == 201) ? new ObjectResult(userConverter.ToResponse(entity)) : result;
+    CreateUserResponse response = await userRepository.CreateNewUser(entity);
+    if (response.WasSuccess)
+    {
+      response.CreatedUser = userConverter.ToResponse(entity);
+    }
+    return response;
   }
 }

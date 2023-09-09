@@ -5,6 +5,6 @@ namespace UserRegistration.Services;
 
 public interface IUserConverter
 {
-  public UserEntity ToEntity(UserCreateRequestDTO createRequestDTO);
-  public UserResponseDTO ToResponse(UserEntity entity);
+  public UserEntity ToEntity(CreateUserRequestDTO createRequestDTO);
+  public UserDTO ToResponse(UserEntity entity);
 }

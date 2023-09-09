@@ -5,5 +5,5 @@ using Domain.Models;
 
 public interface IUserRepository
 {
-   public Task<UserEntity?> GetUserByUsername(string username);
+   public Task<UserEntity?> GetUserByEmailAddress(string emailAddress);
 }

@@ -21,6 +21,8 @@ config.GetSection("SecurityTokenConfig").Bind(securityTokenConfig);
 securityTokenConfig.SecretKey = AmazonSecretRetriever.GetAuthenticationSecret();
 services.AddSingleton(securityTokenConfig);
 
+
+
 // Todo: AWS secret handling for security token config
 
 services.AddSingleton<IPasswordValidator, PasswordValidator>();

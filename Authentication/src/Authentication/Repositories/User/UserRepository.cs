@@ -18,20 +18,20 @@ public class UserRepository : IUserRepository
     };
     context = new DynamoDBContext(amazonDynamoDB, config);
   }
-  public async Task<UserEntity?> GetUserByUsername(string username)
+  public async Task<UserEntity?> GetUserByEmailAddress(string emailAddress)
   {
     DynamoDBOperationConfig config = new()
     {
-      IndexName = "Username-index"
+      IndexName = "EmailAddress-index"
     };
 
-    List<UserEntity> users = await context.QueryAsync<UserEntity>(username, config).GetRemainingAsync();
+    List<UserEntity> users = await context.QueryAsync<UserEntity>(emailAddress, config).GetRemainingAsync();
 
     if (users.Count < 1) return null;
     if (users.Count > 1)
     {
       // Todo: Logging
-      Console.WriteLine("Found more than 1 user with the same username!");
+      Console.WriteLine("Found more than 1 user with the same email!");
       return null;
     }
 

@@ -1,5 +1,5 @@
 using Amazon.DynamoDBv2;
-using Amazon.DynamoDBv2.DataModel;
+using Domain.Config;
 using UserRegistration.Config;
 using UserRegistration.Repositories;
 using UserRegistration.Services;
@@ -18,6 +18,11 @@ services.AddAWSService<IAmazonDynamoDB>();
 UserValidatorConfig userValidatorConfig = new();
 config.GetSection("UserValidatorConfig").Bind(userValidatorConfig);
 services.AddSingleton(userValidatorConfig);
+
+SecurityTokenConfig securityTokenConfig = new();
+config.GetSection("SecurityTokenConfig").Bind(securityTokenConfig);
+securityTokenConfig.SecretKey = AmazonSecretRetriever.GetAuthenticationSecret();
+services.AddSingleton(securityTokenConfig);
 
 services.AddSingleton<IPasswordHasher, PasswordHasher>();
 services.AddSingleton<IUserConverter, UserConverter>();

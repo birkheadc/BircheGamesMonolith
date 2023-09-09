@@ -4,5 +4,5 @@ namespace UserRegistration.Services;
 
 public interface IUserValidator
 {
-  public bool Validate(UserCreateRequestDTO user);
+  public List<CreateUserError> Validate(CreateUserRequestDTO user);
 }

@@ -16,16 +16,20 @@ public class UserRegistrationController : ControllerBase
   }
 
   [HttpPost]
-  public async Task<ActionResult<UserResponseDTO>> PostNewUser([FromBody] UserCreateRequestDTO newUser)
+  public async Task<IActionResult> PostNewUser([FromBody] CreateUserRequestDTO newUser)
   {
     try
     {
-      ActionResult<UserResponseDTO> result = await userService.CreateNewUser(newUser);
-      return result;
+      CreateUserResponse response = await userService.CreateNewUser(newUser);
+      if (response.WasSuccess)
+      {
+        return Ok();
+      }
+      return BadRequest(response);
     }
     catch
     {
-      return StatusCode(9001);
+      return BadRequest("Something terrible and unforeseen has happened");
     }
   }
 }

@@ -51,7 +51,8 @@ public class SecurityTokenGenerator : ISecurityTokenGenerator
     return new SecurityTokenPayload()
     {
       Id = user.Id,
-      Username = user.Username,
+      EmailAddress = user.EmailAddress,
+      DisplayName = user.DisplayName,
       Role = user.Role,
       IsEmailVerified = user.IsEmailVerified
     };

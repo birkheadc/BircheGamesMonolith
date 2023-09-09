@@ -11,24 +11,29 @@ public class UserConverter : IUserConverter
     this.passwordHasher = passwordHasher;
   }
 
-  public UserEntity ToEntity(UserCreateRequestDTO createRequestDTO)
+  public UserEntity ToEntity(CreateUserRequestDTO createRequestDTO)
   {
     return new UserEntity()
     {
       Id = Guid.NewGuid().ToString(),
-      Username = createRequestDTO.Username,
+      EmailAddress = createRequestDTO.EmailAddress,
+      DisplayName = createRequestDTO.DisplayName,
+      Tag = createRequestDTO.Tag,
+      CreationDateTime = DateTime.Now.ToString(),
       PasswordHash = passwordHasher.HashPassword(createRequestDTO.Password),
       Role = UserRole.USER,
       IsEmailVerified = false
     };
   }
 
-  public UserResponseDTO ToResponse(UserEntity entity)
+  public UserDTO ToResponse(UserEntity entity)
   {
-    return new UserResponseDTO()
+    return new UserDTO()
     {
       Id = entity.Id,
-      Username = entity.Username,
+      EmailAddress = entity.EmailAddress,
+      DisplayName = entity.DisplayName,
+      Tag = entity.Tag,
       Role = entity.Role,
       IsEmailVerified = entity.IsEmailVerified
     };

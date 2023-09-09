@@ -23,7 +23,7 @@ public class SecurityTokenService : ISecurityTokenService
     UserEntity? user = null;
     try
     {
-      user = await userRepository.GetUserByUsername(credentials.Username);
+      user = await userRepository.GetUserByEmailAddress(credentials.EmailAddress);
     }
     catch (Exception e)
     {
