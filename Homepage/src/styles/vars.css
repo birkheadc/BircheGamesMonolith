@@ -1,0 +1,9 @@
+:root {
+  --clr-black: #111;
+  --clr-white: #eee;
+  --clr-error: red;
+  
+  --box-shadow-pri: 2px 2px 5px var(--clr-black);
+
+  --border-pri: solid 1px black;
+}

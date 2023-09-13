@@ -11,7 +11,6 @@ namespace UserRegistration.Repositories;
 public class UserRepository : IUserRepository
 {
   private IDynamoDBContext context;
-  private AmazonDynamoDBClient client;
 
   public UserRepository(IAmazonDynamoDB amazonDynamoDB, IWebHostEnvironment webHostEnvironment)
   {
@@ -26,12 +25,6 @@ public class UserRepository : IUserRepository
   {
     bool isEmailAddressUnique = await IsEmailAddressUnique(entity.EmailAddress);
     CreateUserResponse response = new();
-    
-    if (await IsDisplayNameUnique(entity.DisplayName, entity.Tag) == false)
-    {
-      response.WasSuccess = false;
-      response.Errors.Add(new() { Field = "DisplayName", StatusCode = 409, ErrorMessage = "Display Name is already in use." });
-    }
 
     if (isEmailAddressUnique == false)
     {
@@ -82,29 +75,6 @@ public class UserRepository : IUserRepository
     {
       // Todo: Logging
       Console.WriteLine("Encountered exception when attempting to verify uniqueness of email address.");
-      Console.WriteLine(e);
-      return false;
-    }
-  }
-
-  private async Task<bool> IsDisplayNameUnique(string displayName, string tag)
-  {
-    try
-    {
-      DynamoDBOperationConfig config = new()
-      {
-        IndexName = "DisplayName-Tag-index",
-      };
-
-      List<UserEntity> users = await context.QueryAsync<UserEntity>(displayName, QueryOperator.Equal, new object[] { tag }, config).GetRemainingAsync();
-      Console.WriteLine(users.Count == 0 ? $"Didn't find user with DisplayName {displayName} and Tag {tag}" : $"Found user with DisplayName {displayName} and Tag {tag}");
-
-      return users.Count == 0;
-    }
-    catch (Exception e)
-    {
-      // Todo: Logging
-      Console.WriteLine("Encountered exception when attempting to verify uniqueness of display name.");
       Console.WriteLine(e);
       return false;
     }

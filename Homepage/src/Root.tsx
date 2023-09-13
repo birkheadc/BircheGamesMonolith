@@ -5,7 +5,8 @@ import LandingPage from './components/pages/landing/LandingPage';
 import RegisterPage from './components/pages/register/RegisterPage';
 
 import './styles/reset.css';
-import'./styles/shared.css';
+import './styles/shared.css';
+import './styles/vars.css';
 
 interface IRootProps {
 
@@ -19,11 +20,13 @@ export default function Root(props: IRootProps): JSX.Element | null {
   return (
     <BrowserRouter>
       <Nav />
-      <Routes>
-        <Route path={'/register'} element={<RegisterPage />} />
-        <Route path={'/'} element={<LandingPage />}/>
-        <Route path={ '*' } element={ <Navigate replace={true} to={{ pathname: '/' }} /> } ></Route>
-      </Routes>
+      <main>
+        <Routes>
+          <Route path={'/register'} element={<RegisterPage />} />
+          <Route path={'/'} element={<LandingPage />}/>
+          <Route path={ '*' } element={ <Navigate replace={true} to={{ pathname: '/' }} /> } ></Route>
+        </Routes>
+      </main>
     </BrowserRouter>
   );
 }

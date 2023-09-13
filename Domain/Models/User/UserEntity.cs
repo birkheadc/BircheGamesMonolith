@@ -25,4 +25,6 @@ public class UserEntity
   
   [DynamoDBProperty]
   public bool IsEmailVerified { get; init; }
+  [DynamoDBProperty]
+  public bool IsDisplayNameChosen { get; init; }
 }

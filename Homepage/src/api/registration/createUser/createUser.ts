@@ -1,23 +1,19 @@
-import ICreateUserErrorResponse from "../../../types/user/newUser/createUserResponse";
+import ICreateUserResponse from "../../../types/user/newUser/createUserResponse";
 import INewUser from "../../../types/user/newUser/newUser";
 import INewUserValidationConfig from "../../../types/user/newUser/newUserValidationConfig";
+import validateLocal from "../validateLocal/validateLocal";
 
-export default async function createUser(user: INewUser): Promise<ICreateUserErrorResponse | void> {
-  // Todo: Get this from env
-  const validationConfig: INewUserValidationConfig = {
-    displayNameRegex: "^[a-zA-Z0-9]{1,32}#[a-zA-Z0-9]{6}$",
-    passwordMinChars: 8,
-    passwordMaxChars: 64
-  }
-
+export default async function createUser(user: INewUser): Promise<ICreateUserResponse> {
   // Todo: Get this from env
   const url = 'http://localhost:5000/register';
 
-  const validation = validateLocal(user, validationConfig);
+  const validation = validateLocal(user);
   if (validation.wasSuccess === false) return validation;
 
   const controller = new AbortController();
-
+  const timeout = setTimeout(() => {
+    controller.abort();
+  }, 8000);
   try {
     let response: Response = await fetch(
       url,
@@ -26,20 +22,21 @@ export default async function createUser(user: INewUser): Promise<ICreateUserErr
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(user)
+        body: JSON.stringify(user),
+        signal: controller.signal
       }
     );
 
     if (response.status !== 200) {
       try {
-        let data = await response.json() as ICreateUserErrorResponse;
+        let data = await response.json() as ICreateUserResponse;
         return data;
       } catch {
         return {
           wasSuccess: false,
           errors: [
             {
-              field: 'none',
+              field: '',
               statusCode: 500,
               errorMessage: 'Unexpected response format.'
             }
@@ -48,7 +45,10 @@ export default async function createUser(user: INewUser): Promise<ICreateUserErr
       }
     }
 
-    return;
+    return {
+      wasSuccess: true,
+      errors: []
+    };
     
   } catch {
     return {
@@ -61,16 +61,7 @@ export default async function createUser(user: INewUser): Promise<ICreateUserErr
         }
       ]
     }
+  } finally {
+    clearTimeout(timeout);
   }
-}
-
-function validateLocal(user: INewUser, config: INewUserValidationConfig): ICreateUserErrorResponse {
-  const response: ICreateUserErrorResponse = {
-    wasSuccess: true,
-    errors: []
-  }
-
-  // Todo: Validate
-
-  return response;
 }

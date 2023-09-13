@@ -8,7 +8,7 @@ nav>ul {
 }
 
 .navlink.active {
-  color: black;
+  color: var(--clr-black);
   text-decoration: none;
   cursor: default;
   pointer-events: none;

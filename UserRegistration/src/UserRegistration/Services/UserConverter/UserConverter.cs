@@ -17,25 +17,13 @@ public class UserConverter : IUserConverter
     {
       Id = Guid.NewGuid().ToString(),
       EmailAddress = createRequestDTO.EmailAddress,
-      DisplayName = createRequestDTO.DisplayName,
-      Tag = createRequestDTO.Tag,
+      DisplayName = Guid.NewGuid().ToString(),
+      Tag = "######",
       CreationDateTime = DateTime.Now.ToString(),
       PasswordHash = passwordHasher.HashPassword(createRequestDTO.Password),
       Role = UserRole.USER,
-      IsEmailVerified = false
-    };
-  }
-
-  public UserDTO ToResponse(UserEntity entity)
-  {
-    return new UserDTO()
-    {
-      Id = entity.Id,
-      EmailAddress = entity.EmailAddress,
-      DisplayName = entity.DisplayName,
-      Tag = entity.Tag,
-      Role = entity.Role,
-      IsEmailVerified = entity.IsEmailVerified
+      IsEmailVerified = false,
+      IsDisplayNameChosen = false,
     };
   }
 }
