@@ -1,0 +1,13 @@
+div.account-created-page-wrapper {
+  width: fit-content;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  text-align: center;
+}
+
+div.account-created-page-wrapper button {
+  display: block;
+  margin: 0 auto;
+}

@@ -1,3 +1,8 @@
+html {
+  color: var(--clr-black);
+  background-color: var(--clr-white);
+}
+
 main {
   max-width: 980px;
   margin: 0 auto;
@@ -6,6 +11,14 @@ main {
 h1 {
   text-align: center;
   font-size: 2em;
+}
+
+a {
+  color: var(--clr-accent-a);
+}
+
+a:hover, a:focus {
+  color: var(--clr-accent-b);
 }
 
 .hidden {
@@ -32,6 +45,12 @@ form.standard-form div.form-row {
   height: fit-content;
 }
 
+ul.standard-form-errors {
+  display: flex;
+  flex-direction: column;
+  color: var(--clr-error);
+}
+
 div.label-input-wrapper {
   position: relative;
   flex: 1;
@@ -46,7 +65,7 @@ div.label-input-wrapper>label {
   left: 0.2em;
   top: -0.6em;
   padding: 0 0.2em;
-  background-color: white;
+  background-color: var(--clr-white);
 }
 
 div.label-input-wrapper>input {
@@ -60,6 +79,10 @@ div.form-buttons-row {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+
+.bold {
+  font-weight: bold;
 }
 
 .gap-small {
@@ -77,6 +100,7 @@ div.form-buttons-row {
 button {
   border: var(--border-pri);
   padding: 0.3em 0.6em;
+  user-select: none;
 }
 
 button:focus, button:hover {

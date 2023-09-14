@@ -5,7 +5,8 @@ import ICreateUserResponse from '../../../../types/user/newUser/createUserRespon
 import api from '../../../../api';
 
 interface IUserRegisterFormProps {
-  submit: (user: INewUser) => Promise<ICreateUserResponse>
+  submit: (user: INewUser) => Promise<ICreateUserResponse>,
+  errorMessages: string[]
 }
 
 interface IUserRegisterFormErrors {
@@ -78,6 +79,14 @@ export default function UserRegisterForm(props: IUserRegisterFormProps): JSX.Ele
   return (
     <form className='standard-form' onSubmit={handleSubmit}>
       <h1>Create Account</h1>
+      {(props.errorMessages.length > 0) && 
+        <ul className='standard-form-errors'>
+          {props.errorMessages.map(
+            message =>
+            <li key={message}>{message}</li>
+          )}
+        </ul>
+      }
       <div className='form-row'>
         <div className='label-input-wrapper'>
           <label className={errors.emailAddress ? 'error' : ''} htmlFor='email'>Email Address</label>

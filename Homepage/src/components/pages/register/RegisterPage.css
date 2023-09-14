@@ -2,3 +2,8 @@ div.register-page-form-wrapper {
   width: fit-content;
   margin: 0 auto;
 }
+
+ul.register-page-form-errors {
+  display: flex;
+  flex-direction: column;
+}

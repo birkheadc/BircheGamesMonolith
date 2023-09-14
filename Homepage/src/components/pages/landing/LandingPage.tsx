@@ -11,8 +11,6 @@ interface ILandingPageProps {
 */
 export default function LandingPage(props: ILandingPageProps): JSX.Element | null {
   return (
-    <main>
-      <h1>Welcome to Birche Games</h1>
-    </main>
+    <h1>Welcome to Birche Games</h1>
   );
 }

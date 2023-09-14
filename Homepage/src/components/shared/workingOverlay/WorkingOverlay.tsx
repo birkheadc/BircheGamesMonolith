@@ -39,5 +39,5 @@ const spinnerWorkingStyle: React.CSSProperties = {
 }
 
 const spinnerNotWorkingStyle: React.CSSProperties = {
-  opacity: 1.0
+  opacity: 0.0
 }

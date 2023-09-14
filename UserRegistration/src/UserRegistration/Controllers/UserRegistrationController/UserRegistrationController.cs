@@ -15,6 +15,13 @@ public class UserRegistrationController : ControllerBase
     this.userService = userService;
   }
 
+  [HttpGet]
+  [Route("ping")]
+  public IActionResult Ping()
+  {
+    return Ok("This is the user registration controller.");
+  }
+
   [HttpPost]
   public async Task<IActionResult> PostNewUser([FromBody] CreateUserRequestDTO newUser)
   {

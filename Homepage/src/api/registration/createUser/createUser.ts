@@ -5,7 +5,7 @@ import validateLocal from "../validateLocal/validateLocal";
 
 export default async function createUser(user: INewUser): Promise<ICreateUserResponse> {
   // Todo: Get this from env
-  const url = 'http://localhost:5000/register';
+  const url = 'https://9brx0vetyi.execute-api.ap-southeast-2.amazonaws.com/register';
 
   const validation = validateLocal(user);
   if (validation.wasSuccess === false) return validation;
