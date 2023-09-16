@@ -4,8 +4,14 @@ import INewUser from "../../../types/user/newUser/newUser";
 import validateLocal from "../validateLocal/validateLocal";
 
 export default async function createUser(user: INewUser): Promise<ICreateUserResponse> {
-  // Todo: Get this from env
+
   const url = config.registration.apiUrl;
+  if (url == null) return {
+    wasSuccess: false,
+    errors: [
+      
+    ]
+  }
   
   const validation = validateLocal(user);
   if (validation.wasSuccess === false) return validation;

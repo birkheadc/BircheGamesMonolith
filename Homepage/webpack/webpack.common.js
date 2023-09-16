@@ -1,6 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
-const Dotenv = require('dotenv-webpack');
 const path = require('path');
 
 const PUBLIC_PATH = process.env.PUBLIC_PATH || '/';
@@ -48,9 +47,6 @@ module.exports = {
       template: path.join(__dirname, '../public', 'index.html'),
       favicon: './src/assets/favicon.ico'
     }),
-    new NodePolyfillPlugin(),
-    new Dotenv({
-      systemvars: true
-    })
+    new NodePolyfillPlugin()
   ]
 }

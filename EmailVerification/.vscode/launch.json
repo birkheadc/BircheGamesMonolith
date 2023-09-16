@@ -10,13 +10,13 @@
       "request": "launch",
       "preLaunchTask": "build",
       // If you have changed target frameworks, make sure to update the program path.
-      "program": "${workspaceFolder}/src/Authentication/bin/Debug/net6.0/Authentication.dll",
+      "program": "${workspaceFolder}/src/EmailVerification/bin/Debug/net6.0/EmailVerification.dll",
       "args": [],
-      "cwd": "${workspaceFolder}/src/Authentication",
+      "cwd": "${workspaceFolder}/src/EmailVerification",
       "stopAtEntry": false,
       "env": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ASPNETCORE_URLS": "http://localhost:5020"
+        "ASPNETCORE_URLS": "http://localhost:5010"
       },
       "sourceFileMap": {
         "/Views": "${workspaceFolder}/Views"

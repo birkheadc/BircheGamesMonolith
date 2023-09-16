@@ -9,9 +9,9 @@
   "region": "",
   "configuration": "Release",
   "function-runtime": "dotnet6",
-  "function-name": "BircheGamesUserRegistrationAPI",
-  "function-handler": "UserRegistration",
-  "function-role": "arn:aws:iam::290153383648:role/BircheGamesUserRegistration_Role",
+  "function-name": "BircheGamesEmailVerificationAPI",
+  "function-handler": "EmailVerification",
+  "function-role": "arn:aws:iam::290153383648:role/BircheGamesEmailVerification_Role",
   "function-memory-size": 256,
   "function-timeout": 30
 }

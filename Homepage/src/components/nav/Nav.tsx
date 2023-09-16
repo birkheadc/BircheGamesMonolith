@@ -16,6 +16,7 @@ export default function Nav(props: INavProps): JSX.Element | null {
       <ul>
         <NavLink className={navLinkClass} to={'/'}>Home</NavLink>
         <NavLink className={navLinkClass} to={'/register'}>Create Account</NavLink>
+        <NavLink className={navLinkClass} to={'/login'}>Login</NavLink>
       </ul>
     </nav>
   );

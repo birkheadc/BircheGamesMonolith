@@ -1,8 +1,4 @@
-export interface IGeneralConfig {
-  apiCallTimeout: number
-}
-
-const general: IGeneralConfig = {
+const general = {
   apiCallTimeout: 20000
 }
 

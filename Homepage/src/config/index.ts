@@ -1,14 +1,9 @@
-import registration, { IRegistrationConfig } from "./registration";
-import general, { IGeneralConfig } from "./general";
+import general from './general';
+import registration from './registration';
+import authentication from './authentication';
 
-interface IConfig {
-  registration: IRegistrationConfig,
-  general: IGeneralConfig
-}
-
-const config: IConfig = {
+export default {
+  general,
   registration,
-  general
+  authentication
 }
-
-export default config;

@@ -12,6 +12,7 @@ import AccountCreatedPage from './components/pages/accountCreated/AccountCreated
 import { IUserDTO } from './types/user/user';
 import { env } from 'process';
 import config from './config';
+import LoginPage from './components/pages/login/LoginPage';
 
 interface IRootProps {
 
@@ -23,12 +24,16 @@ interface IRootProps {
 */
 export default function Root(props: IRootProps): JSX.Element | null {
 
-  console.log("Create User API Url: ", config.registration.apiUrl);
-
   const [loggedInUser, setLoggedInUser] = React.useState<IUserDTO | null>(null);
 
   const sendVerificationEmail = (address: string) => {
     
+  }
+
+  const login = (sessionToken: string) => {
+    // Store the token in localstorage
+    // then use that token to retrieve the user's data and call setLoggedInUser
+    // then navigate to account page
   }
 
   return (
@@ -36,6 +41,7 @@ export default function Root(props: IRootProps): JSX.Element | null {
       <Nav />
       <main>
         <Routes>
+          <Route path={'/login'} element={<LoginPage login={login}/>} />
           <Route path={'/account-created'} element={<AccountCreatedPage />} />
           <Route path={'/account'} element={loggedInUser ? <AccountPage user={null} /> : <Navigate replace={true} to={{ pathname: '/' }} /> } />
           <Route path={'/register'} element={<RegisterPage sendVerificationEmail={sendVerificationEmail} />} />

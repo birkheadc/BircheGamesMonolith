@@ -1,13 +1,5 @@
-export interface IRegistrationConfig {
-  apiUrl: string,
-  newUserValidation: {
-    passwordMinChars: number,
-    passwordMaxChars: number
-  }
-}
-
-const registration: IRegistrationConfig = {
-  apiUrl: 'https://9brx0vetyi.execute-api.ap-southeast-2.amazonaws.com/register',
+const registration = {
+  apiUrl: process.env.REGISTER_USER_API_URL,
   newUserValidation: {
     passwordMinChars: 8,
     passwordMaxChars: 64

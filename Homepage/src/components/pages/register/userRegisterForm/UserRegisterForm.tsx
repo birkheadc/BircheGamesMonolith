@@ -38,18 +38,16 @@ export default function UserRegisterForm(props: IUserRegisterFormProps): JSX.Ele
   React.useEffect(function validateLocallyOnUserChange() {
     const response = api.registration.validateLocal(user);
     setValid(response.wasSuccess);
-    setErrors(errors => {
-      const newErrors: IUserRegisterFormErrors = {
-        emailAddress: false,
-        password: false,
-        repeatPassword: false
-      };
-      response.errors.forEach(error => {
-        const field = error.field[0].toLowerCase() + error.field.substring(1);
-        newErrors[field] = true;
-      });
-      return newErrors;
+    const newErrors: IUserRegisterFormErrors = {
+      emailAddress: false,
+      password: false,
+      repeatPassword: false
+    };
+    response.errors.forEach(error => {
+      const field = error.field[0].toLowerCase() + error.field.substring(1);
+      newErrors[field] = true;
     });
+    setErrors(newErrors);
   }, [ user ]);
 
   const handleSubmit = async (event: React.FormEvent) => {
