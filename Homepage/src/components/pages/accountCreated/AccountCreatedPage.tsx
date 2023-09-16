@@ -12,7 +12,7 @@ interface IAccountCreatedPageProps {
 */
 export default function AccountCreatedPage(props: IAccountCreatedPageProps): JSX.Element | null {
 
-  const [params, setParams] = useSearchParams();
+  const [params] = useSearchParams();
   const emailAddress = params.get('address');
 
   const handleResend = () => {

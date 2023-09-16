@@ -1,19 +1,19 @@
+import config from "../../../config";
 import ICreateUserResponse from "../../../types/user/newUser/createUserResponse";
 import INewUser from "../../../types/user/newUser/newUser";
-import INewUserValidationConfig from "../../../types/user/newUser/newUserValidationConfig";
 import validateLocal from "../validateLocal/validateLocal";
 
 export default async function createUser(user: INewUser): Promise<ICreateUserResponse> {
   // Todo: Get this from env
-  const url = 'https://9brx0vetyi.execute-api.ap-southeast-2.amazonaws.com/register';
-
+  const url = config.registration.apiUrl;
+  
   const validation = validateLocal(user);
   if (validation.wasSuccess === false) return validation;
 
   const controller = new AbortController();
   const timeout = setTimeout(() => {
     controller.abort();
-  }, 8000);
+  }, config.general.apiCallTimeout);
   try {
     let response: Response = await fetch(
       url,

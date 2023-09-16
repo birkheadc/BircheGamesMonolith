@@ -2,13 +2,12 @@ import config from "../../../config";
 import ICreateUserError from "../../../types/user/newUser/createUserError";
 import ICreateUserResponse from "../../../types/user/newUser/createUserResponse";
 import INewUser from "../../../types/user/newUser/newUser";
-import INewUserValidationConfig from "../../../types/user/newUser/newUserValidationConfig";
 
 import * as EmailValidator from 'email-validator';
 
 export default function validateLocal(user: INewUser): ICreateUserResponse {
 
-  const validationConfig: INewUserValidationConfig = config.registration.newUserValidationConfig;
+  const validationConfig = config.registration.newUserValidation;
 
   let wasSuccess = true;
   const errors: ICreateUserError[] = [];
