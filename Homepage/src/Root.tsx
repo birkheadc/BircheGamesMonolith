@@ -14,6 +14,7 @@ import LoginPage from './components/pages/login/LoginPage';
 
 import jwt_decode from 'jwt-decode';
 import { ISessionTokenPayload } from './types/sessionToken/sessionTokenPayload';
+import helpers from './helpers';
 
 interface IRootProps {
 
@@ -33,7 +34,7 @@ export default function Root(props: IRootProps): JSX.Element | null {
     const token: string | null = localStorage.getItem(SESSION_TOKEN_KEY);
     if (token != null) {
       const payload = jwt_decode(token);
-      const user = getUserFromPayload(payload);
+      const user = helpers.getUserFromPayload(payload);
       setLoggedInUser(user);
     }
   }, []);
@@ -46,11 +47,14 @@ export default function Root(props: IRootProps): JSX.Element | null {
 
   const login = (sessionToken: string) => {
     const payload = jwt_decode(sessionToken);
-    const user = getUserFromPayload(payload);
-    // Todo: Check if `user` is not properly created and reroute to error page or something
+    const user = helpers.getUserFromPayload(payload);
+    if (user == null) {
+      // Todo: Reroute to error page or something
+      return;
+    }
     localStorage.setItem(SESSION_TOKEN_KEY, sessionToken);
     setLoggedInUser(user);
-    nav({ pathname: '/account-created', search: `?${createSearchParams({ address: user.emailAddress })}` });
+    nav('account');
   }
 
   const logout = () => {
@@ -77,17 +81,3 @@ export default function Root(props: IRootProps): JSX.Element | null {
 }
 
 const SESSION_TOKEN_KEY = "SESSION_TOKEN";
-
-function getUserFromPayload(payload: any): IUserDTO {
-  const user: IUserDTO = {
-    id: payload.user.Id,
-    emailAddress: payload.user.EmailAddress,
-    displayName: payload.user.DisplayName,
-    tag: payload.user.Tag,
-    creationDateTime: payload.user.CreationDateTime,
-    role: payload.user.Role,
-    isEmailVerified: payload.user.IsEmailVerified,
-    isDisplayNameChosen: payload.user.IsDisplayNameChosen
-  }
-  return user;
-}

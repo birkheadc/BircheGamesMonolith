@@ -1,8 +1,7 @@
 import * as React from 'react';
 import './AccountPage.css'
 import { IUserDTO } from '../../../types/user/user';
-import { userInfo } from 'os';
-import { useNavigate } from 'react-router-dom';
+import { createSearchParams, useNavigate } from 'react-router-dom';
 
 interface IAccountPageProps {
   user: IUserDTO | null
@@ -21,7 +20,7 @@ export default function AccountPage(props: IAccountPageProps): JSX.Element | nul
     if (props.user == null) nav('/');
     if (props.user?.isEmailVerified == false) {
       console.log("Not email verified, navigating...");
-      nav('/account-created');
+      nav({ pathname: '/account-created', search: `?${createSearchParams({ address: props.user.emailAddress })}` });
     } else {
       console.log("Email is verified");
     }
@@ -36,7 +35,7 @@ export default function AccountPage(props: IAccountPageProps): JSX.Element | nul
       <br></br>
       {props.user && Object.entries(props.user).map(
         ([key, value]) =>
-        <p className='account-page-user-line-wrapper' key={key}><span>{key}</span><span>{value.toString()}</span></p>
+        <p className='account-page-user-line-wrapper' key={key}><span>{key}</span><span>{value?.toString()}</span></p>
       )}
     </div>
   );
