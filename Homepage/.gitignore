@@ -37,5 +37,5 @@ packages/react-devtools-inline/dist
 packages/react-devtools-shell/dist
 packages/react-devtools-timeline/dist
 
-env/.env.development
-env/.env.production
+env/.env.dev
+env/.env.prod
