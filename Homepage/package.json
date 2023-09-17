@@ -34,6 +34,7 @@
   },
   "dependencies": {
     "email-validator": "^2.0.4",
+    "jwt-decode": "^3.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-modal": "^3.16.1",

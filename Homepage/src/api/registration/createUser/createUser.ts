@@ -21,7 +21,7 @@ export default async function createUser(user: INewUser): Promise<ICreateUserRes
     controller.abort();
   }, config.general.apiCallTimeout);
   try {
-    let response: Response = await fetch(
+    const response: Response = await fetch(
       url,
       {
         method: 'POST',

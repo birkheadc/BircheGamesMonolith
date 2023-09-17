@@ -1,0 +1,17 @@
+div.account-page-wrapper {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+p.account-page-user-line-wrapper {
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+  margin: 5px 0;
+  border: var(--border-pri);
+  padding: 5px;
+}
+
+p.account-page-user-line-wrapper>span {
+  width: 300px;
+}

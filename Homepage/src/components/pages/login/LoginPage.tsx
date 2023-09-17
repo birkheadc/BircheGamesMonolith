@@ -3,6 +3,7 @@ import './LoginPage.css'
 import LoginForm from './loginForm/LoginForm';
 import { ICredentials } from '../../../types/credentials/credentials';
 import api from '../../../api';
+import WorkingOverlay from '../../shared/workingOverlay/WorkingOverlay';
 
 interface ILoginPageProps {
   login: (sessionToken: string) => void
@@ -21,15 +22,16 @@ export default function LoginPage(props: ILoginPageProps): JSX.Element | null {
     const response = await api.authentication.retrieveSessionToken(credentials);
     setWorking(false);
 
-    if (response.wasSuccess) {
-      // Todo: store the session token in local storage and reroute to /account page probably (this code should be in Root.tsx)
+    if (response.wasSuccess && response.sessionToken) {
+      props.login(response.sessionToken);
     }
+    
     return response;
   }
 
   return (
     <div className='login-page-wrapper'>
-      <LoginForm submit={handleLogin} />
+      <WorkingOverlay element={<LoginForm submit={handleLogin} />} isWorking={working} />
     </div>
   );
 }

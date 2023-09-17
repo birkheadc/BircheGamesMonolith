@@ -3,7 +3,7 @@ import './AccountCreatedPage.css'
 import { Link, useSearchParams } from 'react-router-dom';
 
 interface IAccountCreatedPageProps {
-
+  resend: (address: string | null) => void
 }
 
 /**
@@ -16,7 +16,7 @@ export default function AccountCreatedPage(props: IAccountCreatedPageProps): JSX
   const emailAddress = params.get('address');
 
   const handleResend = () => {
-
+    props.resend(emailAddress);
   }
 
   return (

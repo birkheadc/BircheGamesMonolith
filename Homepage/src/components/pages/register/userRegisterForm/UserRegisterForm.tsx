@@ -44,7 +44,7 @@ export default function UserRegisterForm(props: IUserRegisterFormProps): JSX.Ele
       repeatPassword: false
     };
     response.errors.forEach(error => {
-      const field = error.field[0].toLowerCase() + error.field.substring(1);
+      const field = error.field[0]?.toLowerCase() + error.field.substring(1);
       newErrors[field] = true;
     });
     setErrors(newErrors);
@@ -58,7 +58,7 @@ export default function UserRegisterForm(props: IUserRegisterFormProps): JSX.Ele
       setErrors(errors => {
         const newErrors = {...errors};
         response.errors.forEach(error => {
-          const field = error.field[0].toLowerCase() + error.field.substring(1);
+          const field = error.field[0]?.toLowerCase() + error.field.substring(1);
           newErrors[field] = true;
         });
         return newErrors;

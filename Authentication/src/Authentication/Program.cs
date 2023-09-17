@@ -30,7 +30,17 @@ services.AddSingleton<ISecurityTokenGenerator, SecurityTokenGenerator>();
 services.AddSingleton<ISecurityTokenService, SecurityTokenService>();
 services.AddSingleton<IUserRepository, UserRepository>();
 
+services.AddCors(o => 
+{
+  o.AddPolicy(name: "All", builder =>
+  {
+    builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+  });
+});
+
 var app = builder.Build();
+
+app.UseCors("All");
 
 if (app.Environment.IsDevelopment() == false)
 {

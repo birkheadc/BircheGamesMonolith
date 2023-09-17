@@ -53,8 +53,11 @@ public class SecurityTokenGenerator : ISecurityTokenGenerator
       Id = user.Id,
       EmailAddress = user.EmailAddress,
       DisplayName = user.DisplayName,
+      Tag = user.Tag,
+      CreationDateTime = user.CreationDateTime,
       Role = user.Role,
-      IsEmailVerified = user.IsEmailVerified
+      IsEmailVerified = user.IsEmailVerified,
+      IsDisplayNameChosen = user.IsDisplayNameChosen
     };
   }
 }
