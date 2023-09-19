@@ -36,8 +36,17 @@ public class UserRepository : IUserRepository
     return users[0];
   }
 
-  public Task<bool> UpdateUserEmailVerifiedToTrue(string id)
+  public async Task<bool> UpdateUser(UserEntity user)
   {
-    throw new NotImplementedException();
+    try
+    {
+      await context.SaveAsync(user);
+      return true;
+    }
+    catch (Exception e)
+    {
+      Console.WriteLine($"Exception encountered while trying to Update User: {e}");
+      return false;
+    }
   }
 }

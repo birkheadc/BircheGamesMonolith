@@ -10,7 +10,7 @@ namespace UserRegistration.Repositories;
 
 public class UserRepository : IUserRepository
 {
-  private IDynamoDBContext context;
+  private readonly IDynamoDBContext context;
 
   public UserRepository(IAmazonDynamoDB amazonDynamoDB, IWebHostEnvironment webHostEnvironment)
   {
@@ -35,7 +35,6 @@ public class UserRepository : IUserRepository
 
       // Todo: Logging
       // Todo: Alert the email service that a new user attempted to register with an existing email address.
-      // Todo: Also, create the email service lol.
       return response;
     }
     if (response.WasSuccess == false)

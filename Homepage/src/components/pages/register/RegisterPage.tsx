@@ -27,7 +27,7 @@ export default function RegisterPage(props: IRegisterPageProps): JSX.Element | n
     setWorking(false);
     if (response.wasSuccess) {
       props.sendVerificationEmail(user.emailAddress);
-      nav({ pathname: '/account-created', search: `?${createSearchParams({ address: user.emailAddress })}` });
+      nav({ pathname: '/email-verification/generate', search: `?${createSearchParams({ address: user.emailAddress })}` });
     } else {
       const _errors: string[] = [];
       response.errors.map(

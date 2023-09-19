@@ -1,7 +1,9 @@
+using EmailVerification.Models;
+
 namespace EmailVerification.Services;
 
 public interface IEmailService
 {
-  public void SendEmailForEmailAddressIfExists(string emailAddress);
+  public void ProcessGenerateRequest(GenerateVerificationEmailRequest request);
   public Task<bool> ProcessVerificationCode(string code);
 }

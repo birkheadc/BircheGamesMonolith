@@ -1,10 +1,11 @@
+using EmailVerification.Models;
 using EmailVerification.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EmailVerification.Controllers;
 
 [ApiController]
-[Route("verify-email")]
+[Route("email-verification")]
 public class EmailVerificationController : ControllerBase
 {
   private readonly IEmailService emailService;
@@ -14,13 +15,19 @@ public class EmailVerificationController : ControllerBase
     this.emailService = emailService;
   }
 
-  public async Task<IActionResult> GenerateEmail()
+  [HttpPost]
+  [Route("generate")]
+  public async Task<IActionResult> GenerateEmail([FromBody] GenerateVerificationEmailRequest request)
   {
+    emailService.ProcessGenerateRequest(request);
     return Ok();
   }
 
-  public async Task<IActionResult> Verify()
+  [HttpPost]
+  [Route("verify")]
+  public async Task<IActionResult> Verify([FromBody] VerifyCodeRequest request)
   {
-    return Ok();
+    bool wasSuccess = await emailService.ProcessVerificationCode(request.VerificationCode);
+    return wasSuccess ? Ok() : Unauthorized();
   }
 }

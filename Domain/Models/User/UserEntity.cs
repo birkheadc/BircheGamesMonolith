@@ -12,19 +12,19 @@ public class UserEntity
   public string EmailAddress { get; init; } = "";
 
   [DynamoDBGlobalSecondaryIndexHashKey]
-  public string DisplayName { get; init; } = "";
+  public string DisplayName { get; set; } = "";
   [DynamoDBGlobalSecondaryIndexRangeKey]
-  public string Tag { get; init; } = "";
+  public string Tag { get; set; } = "";
   [DynamoDBProperty]
   public string CreationDateTime { get; init; } = "";
   [DynamoDBProperty]
-  public string PasswordHash { get; init; } = "";
+  public string PasswordHash { get; set; } = "";
 
   [DynamoDBProperty]
-  public UserRole Role { get; init; }
+  public UserRole Role { get; set; }
   
   [DynamoDBProperty]
-  public bool IsEmailVerified { get; init; }
+  public bool IsEmailVerified { get; set; }
   [DynamoDBProperty]
-  public bool IsDisplayNameChosen { get; init; }
+  public bool IsDisplayNameChosen { get; set; }
 }

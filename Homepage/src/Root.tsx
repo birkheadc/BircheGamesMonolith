@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Navigate, Route, Routes, createSearchParams, useNavigate } from 'react-router-dom';
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import Nav from './components/nav/Nav';
 import LandingPage from './components/pages/landing/LandingPage';
 import RegisterPage from './components/pages/register/RegisterPage';
@@ -8,13 +8,14 @@ import './styles/reset.css';
 import './styles/shared.css';
 import './styles/vars.css';
 import AccountPage from './components/pages/account/AccountPage';
-import AccountCreatedPage from './components/pages/accountCreated/AccountCreatedPage';
 import { IUserDTO } from './types/user/user';
 import LoginPage from './components/pages/login/LoginPage';
 
 import jwt_decode from 'jwt-decode';
-import { ISessionTokenPayload } from './types/sessionToken/sessionTokenPayload';
 import helpers from './helpers';
+import api from './api';
+import GenerateVerificationEmailPage from './components/pages/emailVerification/GenerateVerificationEmailPage';
+import VerifyEmailPage from './components/pages/emailVerification/VerifyEmailPage';
 
 interface IRootProps {
 
@@ -39,9 +40,12 @@ export default function Root(props: IRootProps): JSX.Element | null {
     }
   }, []);
 
-  const sendVerificationEmail = (address: string | null) => {
-    if (address != null) {
-      console.log(`Request email to: ${address}`);
+  const sendVerificationEmail = async (emailAddress: string | null) => {
+    if (emailAddress != null) {
+      console.log("Requesting verification email: ", emailAddress);
+      const didSend = await api.email.requestVerificationEmail(emailAddress);
+      console.log(didSend);
+      // Todo: Maybe do something depending on whether it sent or not? For now, just pretend that it did.
     }
   }
 
@@ -69,7 +73,8 @@ export default function Root(props: IRootProps): JSX.Element | null {
       <main>
         <Routes>
           <Route path={'/login'} element={<LoginPage login={login}/>} />
-          <Route path={'/account-created'} element={<AccountCreatedPage resend={sendVerificationEmail}/>} />
+          <Route path={'/email-verification/generate'} element={<GenerateVerificationEmailPage resend={sendVerificationEmail}/>} />
+          <Route path={'email-verification/verify'} element={<VerifyEmailPage />} />
           <Route path={'/account'} element={loggedInUser ? <AccountPage user={loggedInUser} /> : <Navigate replace={true} to={{ pathname: '/' }} /> } />
           <Route path={'/register'} element={<RegisterPage sendVerificationEmail={sendVerificationEmail} />} />
           <Route path={'/'} element={<LandingPage />}/>

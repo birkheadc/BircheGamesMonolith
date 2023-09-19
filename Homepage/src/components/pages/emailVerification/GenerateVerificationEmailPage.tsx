@@ -1,8 +1,8 @@
 import * as React from 'react';
-import './AccountCreatedPage.css'
+import './GenerateVerificationEmailPage.css'
 import { Link, useSearchParams } from 'react-router-dom';
 
-interface IAccountCreatedPageProps {
+interface IGenerateVerificationEmailPageProps {
   resend: (address: string | null) => void
 }
 
@@ -10,8 +10,7 @@ interface IAccountCreatedPageProps {
 *
 * @returns {JSX.Element | null}
 */
-export default function AccountCreatedPage(props: IAccountCreatedPageProps): JSX.Element | null {
-
+export default function GenerateVerificationEmailPage(props: IGenerateVerificationEmailPageProps): JSX.Element | null {
   const [params] = useSearchParams();
   const emailAddress = params.get('address');
 
@@ -20,7 +19,7 @@ export default function AccountCreatedPage(props: IAccountCreatedPageProps): JSX
   }
 
   return (
-    <div className='account-created-page-wrapper'>
+    <div className='generate-verification-email-page'>
       {emailAddress == null || emailAddress === '' ?
         <>
           <p>Something has gone wrong...</p>

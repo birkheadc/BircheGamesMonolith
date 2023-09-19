@@ -20,7 +20,7 @@ export default function AccountPage(props: IAccountPageProps): JSX.Element | nul
     if (props.user == null) nav('/');
     if (props.user?.isEmailVerified == false) {
       console.log("Not email verified, navigating...");
-      nav({ pathname: '/account-created', search: `?${createSearchParams({ address: props.user.emailAddress })}` });
+      nav({ pathname: '/email-verification/generate', search: `?${createSearchParams({ address: props.user.emailAddress })}` });
     } else {
       console.log("Email is verified");
     }
