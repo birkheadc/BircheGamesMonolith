@@ -2,14 +2,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 const path = require('path');
 
-const PUBLIC_PATH = process.env.PUBLIC_PATH || '/';
-
 module.exports = {
   entry: './index.tsx',
   output: {
     path: path.resolve(__dirname, '../dist'),
     filename: 'index_bundle.js',
-    publicPath: PUBLIC_PATH
   },
   target: 'web',
   resolve: {

@@ -38,4 +38,7 @@ packages/react-devtools-shell/dist
 packages/react-devtools-timeline/dist
 
 env/.env.dev
+env/.env.stage
 env/.env.prod
+
+dist

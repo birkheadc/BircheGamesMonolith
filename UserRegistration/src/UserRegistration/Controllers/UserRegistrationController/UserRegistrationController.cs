@@ -9,17 +9,19 @@ namespace UserRegistration.Controllers;
 public class UserRegistrationController : ControllerBase
 {
   private readonly IUserService userService;
+  private readonly IWebHostEnvironment webHostEnvironment;
 
-  public UserRegistrationController(IUserService userService)
+  public UserRegistrationController(IUserService userService, IWebHostEnvironment webHostEnvironment)
   {
     this.userService = userService;
+    this.webHostEnvironment = webHostEnvironment;
   }
 
   [HttpGet]
   [Route("ping")]
   public IActionResult Ping()
   {
-    return Ok("This is the user registration controller.");
+    return Ok($"You've reached the user registration api. Environment = {webHostEnvironment.EnvironmentName}");
   }
 
   [HttpPost]

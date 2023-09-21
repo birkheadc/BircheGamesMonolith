@@ -47,4 +47,6 @@ app.MapControllers();
 
 app.MapGet("/", () => "You've reached the authentication service.");
 
+Console.WriteLine($"Authentication API launched in {app.Environment.EnvironmentName} mode.");
+
 app.Run();

@@ -52,4 +52,6 @@ app.MapControllers();
 
 app.MapGet("/", () => "Welcome to running ASP.NET Core Minimal API on AWS Lambda");
 
+Console.WriteLine($"Email Verification API launched in {app.Environment.EnvironmentName} mode.");
+
 app.Run();

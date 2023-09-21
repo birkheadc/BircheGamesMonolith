@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server . --config ./webpack/webpack.dev.js",
+    "stage": "webpack . --config ./webpack/webpack.stage.js",
     "build": "webpack . --config ./webpack/webpack.prod.js"
   },
   "author": "Colby Birkhead",

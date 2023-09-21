@@ -50,6 +50,4 @@ if (app.Environment.IsDevelopment() == false)
 app.UseAuthorization();
 app.MapControllers();
 
-app.MapGet("/", () => "You've reached the user registration api.");
-
 app.Run();
