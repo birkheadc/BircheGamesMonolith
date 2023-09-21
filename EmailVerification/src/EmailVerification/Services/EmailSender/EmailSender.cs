@@ -1,6 +1,8 @@
+using System.Reflection;
 using Amazon.SimpleEmail;
 using Amazon.SimpleEmail.Model;
 using EmailVerification.Config;
+using Microsoft.Extensions.FileProviders;
 
 namespace EmailVerification.Services;
 
@@ -25,18 +27,19 @@ public class EmailSender : IEmailSender
     SendEmailRequest request = new()
     {
       Destination = destination,
-      Message = GenerateMessage(link),
+      Message = message,
       Source = emailVerificationConfig.SenderAddress
     };
     SendEmailResponse response = await amazonSimpleEmailService.SendEmailAsync(request);
-
+    Console.WriteLine($"Sent an email, got a response: {response.HttpStatusCode}");
     return response.HttpStatusCode == System.Net.HttpStatusCode.OK;
   }
 
   private Message GenerateMessage(string link)
   {
-    using StreamReader reader = File.OpenText(emailVerificationConfig.VerificationEmailTemplatePath);
-    string html = reader.ReadToEnd();
+    // using StreamReader reader = File.OpenText(emailVerificationConfig.VerificationEmailTemplatePath);
+    // string html = reader.ReadToEnd();
+    string html = GetTemplate();
     html = html.Replace("{{verifyUrl}}", link);
 
     Body body = new()
@@ -59,5 +62,21 @@ public class EmailSender : IEmailSender
     };
 
     return message;
+  }
+
+  private string GetTemplate()
+  {
+    return "{{verifyUrl}}";
+    return ReadManifestData<string>("EmailTemplate.html");
+  }
+
+  public static string ReadManifestData<TSource>(string embeddedFileName) where TSource : class
+{
+    var assembly = typeof(TSource).GetTypeInfo().Assembly;
+    var resourceName = assembly.GetManifestResourceNames().First(s => s.EndsWith(embeddedFileName,StringComparison.CurrentCultureIgnoreCase));
+
+    using var stream = assembly.GetManifestResourceStream(resourceName) ?? throw new InvalidOperationException("Could not load manifest resource stream.");
+    using var reader = new StreamReader(stream);
+    return reader.ReadToEnd();
   }
 }

@@ -20,7 +20,7 @@ public class AuthenticationController : ControllerBase
   public async Task<ActionResult<SecurityTokenWrapper>> Authenticate()
   {
     Credentials? credentials = GetCredentialsFromHeaders(Request.Headers);
-    if (credentials is null) return Forbid();
+    if (credentials is null) return Unauthorized();
 
     try
     {

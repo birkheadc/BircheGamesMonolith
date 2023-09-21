@@ -19,7 +19,7 @@ public class EmailVerificationController : ControllerBase
   [Route("generate")]
   public async Task<IActionResult> GenerateEmail([FromBody] GenerateVerificationEmailRequest request)
   {
-    emailService.ProcessGenerateRequest(request);
+    await emailService.ProcessGenerateRequest(request);
     return Ok();
   }
 

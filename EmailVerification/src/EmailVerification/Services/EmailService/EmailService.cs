@@ -38,10 +38,10 @@ public class EmailService : IEmailService
     return wasSuccess;
   }
 
-  public void ProcessGenerateRequest(GenerateVerificationEmailRequest request)
+  public async Task ProcessGenerateRequest(GenerateVerificationEmailRequest request)
   {
     string verifyLink = GenerateVerifyLinkFromRequest(request);
-    emailSender.SendEmailWithVerificationLinkToEmailAddress(verifyLink, request.EmailAddress);
+    await emailSender.SendEmailWithVerificationLinkToEmailAddress(verifyLink, request.EmailAddress);
   }
 
   private string GenerateVerifyLinkFromRequest(GenerateVerificationEmailRequest request)
