@@ -80,6 +80,7 @@ export default function Root(props: IRootProps): JSX.Element | null {
           <Route path={'/'} element={<LandingPage />}/>
           <Route path={ '*' } element={ <Navigate replace={true} to={{ pathname: '/' }} /> } ></Route>
         </Routes>
+        {process.env.ENVIRONMENT != "Production" && <span style={{ textAlign: 'center', width: '100%', display: 'inline-block', padding: '2em' }}>{"Environment: " + process.env.ENVIRONMENT}</span>}
       </main>
     </>
   );
