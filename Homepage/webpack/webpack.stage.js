@@ -5,7 +5,7 @@ const commonConfig = require('./webpack.common.js');
 
 module.exports = merge(commonConfig, {
   output: {
-    publicPath: '/'
+    publicPath: './'
   },
   mode: 'production',
   devtool: 'source-map',
