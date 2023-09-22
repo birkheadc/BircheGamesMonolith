@@ -4,6 +4,9 @@ const Dotenv = require('dotenv-webpack');
 const commonConfig = require('./webpack.common.js');
 
 module.exports = merge(commonConfig, {
+  output: {
+    publicPath: '/'
+  },
   mode: 'production',
   devtool: 'source-map',
   plugins: [
