@@ -67,6 +67,10 @@ export default function Root(props: IRootProps): JSX.Element | null {
     nav('/');
   }
 
+  if (process.env.ENVIRONMENT === 'Production') return (
+    <h1>Birche Games is still under development!</h1>
+  )
+
   return (
     <>
       <Nav />
