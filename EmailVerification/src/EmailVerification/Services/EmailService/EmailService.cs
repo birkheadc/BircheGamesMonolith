@@ -53,4 +53,9 @@ public class EmailService : IEmailService
   {
     return tokenGenerator.GenerateTokenForEmailAddress(emailAddress);
   }
+
+  public async Task<string> GetVerificationEmailTemplate()
+  {
+    return await emailSender.GetVerificationEmailTemplate();
+  }
 }

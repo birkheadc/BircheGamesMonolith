@@ -2,7 +2,6 @@ using System.Reflection;
 using Amazon.SimpleEmail;
 using Amazon.SimpleEmail.Model;
 using EmailVerification.Config;
-using Microsoft.Extensions.FileProviders;
 
 namespace EmailVerification.Services;
 
@@ -37,8 +36,6 @@ public class EmailSender : IEmailSender
 
   private Message GenerateMessage(string link)
   {
-    // using StreamReader reader = File.OpenText(emailVerificationConfig.VerificationEmailTemplatePath);
-    // string html = reader.ReadToEnd();
     string html = GetTemplate();
     html = html.Replace("{{verifyUrl}}", link);
 
@@ -66,17 +63,11 @@ public class EmailSender : IEmailSender
 
   private string GetTemplate()
   {
-    return "{{verifyUrl}}";
-    return ReadManifestData<string>("EmailTemplate.html");
+    return EmailTemplate.Template;
   }
 
-  public static string ReadManifestData<TSource>(string embeddedFileName) where TSource : class
-{
-    var assembly = typeof(TSource).GetTypeInfo().Assembly;
-    var resourceName = assembly.GetManifestResourceNames().First(s => s.EndsWith(embeddedFileName,StringComparison.CurrentCultureIgnoreCase));
-
-    using var stream = assembly.GetManifestResourceStream(resourceName) ?? throw new InvalidOperationException("Could not load manifest resource stream.");
-    using var reader = new StreamReader(stream);
-    return reader.ReadToEnd();
+  public Task<string> GetVerificationEmailTemplate()
+  {
+    return Task.FromResult(GetTemplate());
   }
 }

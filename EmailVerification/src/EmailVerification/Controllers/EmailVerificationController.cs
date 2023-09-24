@@ -15,6 +15,23 @@ public class EmailVerificationController : ControllerBase
     this.emailService = emailService;
   }
 
+  [HttpGet]
+  [Route("template")]
+  public async Task<ActionResult<string>> GetTemplate()
+  {
+    try
+    {
+      string template = await emailService.GetVerificationEmailTemplate();
+      return Ok(template);
+    }
+    catch (Exception e)
+    {
+      Console.WriteLine("Exception encountered while attempting to get verification email template:");
+      Console.WriteLine(e);
+      return BadRequest();
+    }
+  }
+
   [HttpPost]
   [Route("generate")]
   public async Task<IActionResult> GenerateEmail([FromBody] GenerateVerificationEmailRequest request)
