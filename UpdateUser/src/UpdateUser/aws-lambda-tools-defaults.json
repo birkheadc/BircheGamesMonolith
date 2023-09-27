@@ -8,7 +8,10 @@
   "profile": "",
   "region": "",
   "configuration": "Release",
-  "s3-prefix": "UpdateUser/",
-  "template": "serverless.template",
-  "template-parameters": ""
+  "function-runtime": "dotnet6",
+  "function-name": "BircheGamesUpdateUserAPI",
+  "function-handler": "UpdateUser",
+  "function-role": "arn:aws:iam::290153383648:role/BircheGamesUpdateUser_Role",
+  "function-memory-size": 256,
+  "function-timeout": 30
 }

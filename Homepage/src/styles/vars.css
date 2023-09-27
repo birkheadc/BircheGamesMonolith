@@ -1,6 +1,7 @@
 :root {
   --clr-black: #31393C;
   --clr-white: #FEF5EF;
+  --clr-disabled: #988476;
   --clr-error: red;
 
   --clr-accent-a: #E15554;

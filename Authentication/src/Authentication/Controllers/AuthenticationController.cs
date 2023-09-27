@@ -1,12 +1,16 @@
 using System.Text;
+using System.Text.Json;
 using Authentication.Models;
 using Authentication.Services;
+using Domain.Authorization;
+using Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Authentication.Controllers;
 
 [ApiController]
-[Route("authenticate")]
+[Route("authentication")]
 public class AuthenticationController : ControllerBase
 {
   private readonly ISecurityTokenService securityTokenService;
@@ -17,14 +21,23 @@ public class AuthenticationController : ControllerBase
   }
 
   [HttpPost]
+  [AllowAnonymous]
   public async Task<ActionResult<SecurityTokenWrapper>> Authenticate()
   {
+    
     Credentials? credentials = GetCredentialsFromHeaders(Request.Headers);
     if (credentials is null) return Unauthorized();
 
     try
     {
-      return await securityTokenService.AuthenticateUser(credentials);
+      SecurityTokenWrapper? tokenWrapper = (await securityTokenService.AuthenticateUser(credentials)).Value;
+      if (tokenWrapper is not null)
+      {
+        Console.WriteLine("Generated Token: ");
+        Console.WriteLine(tokenWrapper.Token);
+        return Ok(tokenWrapper);
+      }
+      return Unauthorized();
     }
     catch (Exception e)
     {
@@ -58,6 +71,62 @@ public class AuthenticationController : ControllerBase
       Console.WriteLine("Exception encountered while trying to retrieve credentials from header:");
       Console.WriteLine(e);
       return null;
+    }
+  }
+
+  [HttpGet]
+  [Route("token-verification/any")]
+  [Authorize]
+  public IActionResult VerifyTokenAny()
+  {
+    try
+    {
+      SecurityTokenPayload? payload = JsonSerializer.Deserialize<SecurityTokenPayload>(HttpContext.User.Claims.Where(c => c.Type == "user").FirstOrDefault()?.Value ?? "");
+      Console.WriteLine("Logged in user:");
+      Console.WriteLine(payload?.Id);
+      return Ok("This token is valid.");
+    }
+    catch
+    {
+      return StatusCode(9001);
+    }
+  }
+
+  [HttpGet]
+  [Route("token-verification/admin")]
+  [Authorize]
+  [RequiresRole(UserRole.ADMIN)]
+  public IActionResult VerifyTokenAdmin()
+  {
+    try
+    {
+      SecurityTokenPayload? payload = JsonSerializer.Deserialize<SecurityTokenPayload>(HttpContext.User.Claims.Where(c => c.Type == "user").FirstOrDefault()?.Value ?? "");
+      Console.WriteLine("Logged in user:");
+      Console.WriteLine(payload?.Id);
+      return Ok("This token is valid and the user is an admin.");
+    }
+    catch
+    {
+      return StatusCode(9001);
+    }
+  }
+
+  [HttpGet]
+  [Route("token-verification/super")]
+  [Authorize]
+  [RequiresRole(UserRole.SUPER)]
+  public IActionResult VerifyTokenSuper()
+  {
+    try
+    {
+      SecurityTokenPayload? payload = JsonSerializer.Deserialize<SecurityTokenPayload>(HttpContext.User.Claims.Where(c => c.Type == "user").FirstOrDefault()?.Value ?? "");
+      Console.WriteLine("Logged in user:");
+      Console.WriteLine(payload?.Id);
+      return Ok("This token is valid and the user is a super admin.");
+    }
+    catch
+    {
+      return StatusCode(9001);
     }
   }
 }

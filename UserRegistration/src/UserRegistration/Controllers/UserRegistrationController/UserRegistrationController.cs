@@ -5,7 +5,7 @@ using UserRegistration.Services;
 namespace UserRegistration.Controllers;
 
 [ApiController]
-[Route("register")]
+[Route("registration")]
 public class UserRegistrationController : ControllerBase
 {
   private readonly IUserService userService;

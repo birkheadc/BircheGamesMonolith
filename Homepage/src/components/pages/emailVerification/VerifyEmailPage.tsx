@@ -21,7 +21,6 @@ export default function VerifyEmailPage(props: IVerifyEmailPageProps): JSX.Eleme
   React.useEffect(() => {
     (async function processVerificationCode() {
       const result: { wasSuccess: boolean, error?: string | undefined } = await api.email.verifyCode(code);
-      console.log("result: ", result);
       setStatus(result.wasSuccess ? "Congratulations, your account has been verified. You may now login and use your new account." : result.error ?? "Something went wrong...");
     })();
   }, [ code ]);

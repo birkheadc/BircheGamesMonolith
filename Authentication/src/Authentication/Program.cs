@@ -3,6 +3,10 @@ using Authentication.Services;
 using Authentication.Repositories;
 using Authentication.Config;
 using Domain.Config;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -34,6 +38,27 @@ services.AddCors(o =>
   });
 });
 
+services.AddAuthentication(options =>
+{
+  options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+  options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+  options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+  options.TokenValidationParameters = new TokenValidationParameters()
+  {
+    ValidIssuer = securityTokenConfig.Issuer,
+    ValidAudience = securityTokenConfig.Audience,
+    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(securityTokenConfig.SecretKey)),
+    ValidateIssuer = true,
+    ValidateAudience = true,
+    ValidateLifetime = true,
+    ValidateIssuerSigningKey = true
+  };
+});
+
+services.AddAuthorization();
+
 var app = builder.Build();
 
 app.UseCors("All");
@@ -42,7 +67,10 @@ if (app.Environment.IsDevelopment() == false)
 {
   app.UseHttpsRedirection();
 }
+
+app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllers();
 
 app.MapGet("/", () => "You've reached the authentication service.");

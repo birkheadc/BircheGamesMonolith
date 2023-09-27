@@ -10,8 +10,6 @@ nav>ul {
 .navlink.active {
   color: var(--clr-black);
   text-decoration: none;
-  cursor: default;
-  pointer-events: none;
 }
 
 .navlink.inactive {

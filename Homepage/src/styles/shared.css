@@ -60,6 +60,10 @@ div.label-input-wrapper:focus-within, div.label-input-wrapper:hover {
   box-shadow: var(--box-shadow-pri);
 }
 
+div.label-input-wrapper.disabled {
+  box-shadow: none;
+}
+
 div.label-input-wrapper>label {
   position: absolute;
   left: 0.2em;
@@ -72,6 +76,10 @@ div.label-input-wrapper>input {
   border: var(--border-pri);
   padding: 0.5em;
   width: 100%;
+}
+
+div.label-input-wrapper>input:disabled {
+  color: var(--clr-disabled);
 }
 
 div.form-buttons-row {

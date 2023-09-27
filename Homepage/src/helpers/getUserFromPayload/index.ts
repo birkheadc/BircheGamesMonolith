@@ -18,7 +18,6 @@ export default function getUserFromPayload(payload: any): IUserDTO | null {
     });
     return user;
   } catch {
-    console.log("Unable to parse payload into user object.");
     return null;
   }
 }

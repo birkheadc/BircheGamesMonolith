@@ -1,4 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 using Authentication.Config;
 using Authentication.Models;
@@ -31,7 +32,8 @@ public class SecurityTokenGenerator : ISecurityTokenGenerator
   {
     Dictionary<string, object> claims = new()
     {
-      { "user", GeneratePayloadForUser(user) }
+      { "user", GeneratePayloadForUser(user) },
+      { ClaimTypes.Role, user.Role },
     };
     return new SecurityTokenDescriptor()
     {

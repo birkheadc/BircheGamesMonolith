@@ -7,7 +7,7 @@ import RegisterPage from './components/pages/register/RegisterPage';
 import './styles/reset.css';
 import './styles/shared.css';
 import './styles/vars.css';
-import AccountPage from './components/pages/account/AccountPage';
+import AccountPage from './components/pages/account/accountPage/AccountPage';
 import { IUserDTO } from './types/user/user';
 import LoginPage from './components/pages/login/LoginPage';
 
@@ -16,6 +16,8 @@ import helpers from './helpers';
 import api from './api';
 import GenerateVerificationEmailPage from './components/pages/emailVerification/GenerateVerificationEmailPage';
 import VerifyEmailPage from './components/pages/emailVerification/VerifyEmailPage';
+import LogoutPage from './components/logout/LogoutPage';
+import AccountPageRouter from './components/pages/account/AccountPageRouter';
 
 interface IRootProps {
 
@@ -27,24 +29,24 @@ interface IRootProps {
 */
 export default function Root(props: IRootProps): JSX.Element | null {
 
-  const [loggedInUser, setLoggedInUser] = React.useState<IUserDTO | null>(null);
+  const [loggedInUser, setLoggedInUser] = React.useState<IUserDTO | null | undefined>(undefined);
 
   const nav = useNavigate();
 
   React.useEffect(function checkStorageForTokenOnMount() {
     const token: string | null = localStorage.getItem(SESSION_TOKEN_KEY);
-    if (token != null) {
-      const payload = jwt_decode(token);
-      const user = helpers.getUserFromPayload(payload);
-      setLoggedInUser(user);
+    if (token == null) {
+      setLoggedInUser(null);
+      return;
     }
+    const payload = jwt_decode(token);
+    const user = helpers.getUserFromPayload(payload);
+    setLoggedInUser(user);
   }, []);
 
   const sendVerificationEmail = async (emailAddress: string | null) => {
     if (emailAddress != null) {
-      console.log("Requesting verification email: ", emailAddress);
       const didSend = await api.email.requestVerificationEmail(emailAddress);
-      console.log(didSend);
       // Todo: Maybe do something depending on whether it sent or not? For now, just pretend that it did.
     }
   }
@@ -71,15 +73,22 @@ export default function Root(props: IRootProps): JSX.Element | null {
     <h1>Birche Games is still under development!</h1>
   )
 
+  if (loggedInUser === undefined) {
+    return (
+      <h1>Loading...</h1>
+    )
+  }
+
   return (
     <>
-      <Nav />
+      <Nav user={loggedInUser} />
       <main>
         <Routes>
           <Route path={'/login'} element={<LoginPage login={login}/>} />
+          <Route path={'/logout'} element={<LogoutPage logout={logout} />} />
           <Route path={'/email-verification/generate'} element={<GenerateVerificationEmailPage resend={sendVerificationEmail}/>} />
           <Route path={'email-verification/verify'} element={<VerifyEmailPage />} />
-          <Route path={'/account'} element={loggedInUser ? <AccountPage user={loggedInUser} /> : <Navigate replace={true} to={{ pathname: '/' }} /> } />
+          <Route path={'/account/*'} element={<AccountPageRouter loggedInUser={loggedInUser} />} />
           <Route path={'/register'} element={<RegisterPage sendVerificationEmail={sendVerificationEmail} />} />
           <Route path={'/'} element={<LandingPage />}/>
           <Route path={ '*' } element={ <Navigate replace={true} to={{ pathname: '/' }} /> } ></Route>
