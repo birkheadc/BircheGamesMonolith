@@ -3,6 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using UpdateUser.Config;
 using Domain.Config;
 using System.Text;
+using UpdateUser.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -19,6 +20,8 @@ SecurityTokenConfig securityTokenConfig = new();
 config.GetSection("SecurityTokenConfig").Bind(securityTokenConfig);
 securityTokenConfig.SecretKey = AmazonSecretRetriever.GetAuthenticationSecret();
 services.AddSingleton(securityTokenConfig);
+
+services.AddSingleton<IUserService, UserService>();
 
 services.AddCors(o =>
 {
@@ -58,6 +61,7 @@ if (app.Environment.IsDevelopment() == false)
   app.UseHttpsRedirection();
 }
 
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 

@@ -23,6 +23,7 @@ services.AddAWSService<IAmazonDynamoDB>();
 SecurityTokenConfig securityTokenConfig = new();
 config.GetSection("SecurityTokenConfig").Bind(securityTokenConfig);
 securityTokenConfig.SecretKey = AmazonSecretRetriever.GetAuthenticationSecret();
+Console.WriteLine($"Secret Key: {securityTokenConfig.SecretKey}");
 services.AddSingleton(securityTokenConfig);
 
 services.AddSingleton<IPasswordValidator, PasswordValidator>();

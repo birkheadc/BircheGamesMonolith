@@ -16,7 +16,7 @@ import helpers from './helpers';
 import api from './api';
 import GenerateVerificationEmailPage from './components/pages/emailVerification/GenerateVerificationEmailPage';
 import VerifyEmailPage from './components/pages/emailVerification/VerifyEmailPage';
-import LogoutPage from './components/logout/LogoutPage';
+import LogoutPage from './components/pages/logout/LogoutPage';
 import AccountPageRouter from './components/pages/account/AccountPageRouter';
 
 interface IRootProps {

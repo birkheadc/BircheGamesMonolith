@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UpdateUser.Models;
 using UpdateUser.Services;
@@ -17,8 +18,9 @@ public class UserMeController : ControllerBase
   }
 
   [HttpPatch]
+  [Authorize]
   public async Task<IActionResult> PatchDisplayNameAndTag([FromBody] PatchDisplayNameAndTagRequest request)
   {
-    return Ok();
+    return Ok($"Change user to: {request.DisplayName}#{request.Tag}");
   }
 }

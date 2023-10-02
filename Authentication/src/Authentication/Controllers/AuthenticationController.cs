@@ -24,17 +24,14 @@ public class AuthenticationController : ControllerBase
   [AllowAnonymous]
   public async Task<ActionResult<SecurityTokenWrapper>> Authenticate()
   {
-    
     Credentials? credentials = GetCredentialsFromHeaders(Request.Headers);
-    if (credentials is null) return Unauthorized();
+    if (credentials is null) return Unauthorized("Unable to retrieve credentials from Authorization header.");
 
     try
     {
       SecurityTokenWrapper? tokenWrapper = (await securityTokenService.AuthenticateUser(credentials)).Value;
       if (tokenWrapper is not null)
       {
-        Console.WriteLine("Generated Token: ");
-        Console.WriteLine(tokenWrapper.Token);
         return Ok(tokenWrapper);
       }
       return Unauthorized();
@@ -75,20 +72,18 @@ public class AuthenticationController : ControllerBase
   }
 
   [HttpGet]
-  [Route("token-verification/any")]
+  [Route("token-verification")]
   [Authorize]
   public IActionResult VerifyTokenAny()
   {
     try
     {
       SecurityTokenPayload? payload = JsonSerializer.Deserialize<SecurityTokenPayload>(HttpContext.User.Claims.Where(c => c.Type == "user").FirstOrDefault()?.Value ?? "");
-      Console.WriteLine("Logged in user:");
-      Console.WriteLine(payload?.Id);
       return Ok("This token is valid.");
     }
     catch
     {
-      return StatusCode(9001);
+      return Unauthorized("There was a problem verifying the token.");
     }
   }
 
@@ -101,13 +96,11 @@ public class AuthenticationController : ControllerBase
     try
     {
       SecurityTokenPayload? payload = JsonSerializer.Deserialize<SecurityTokenPayload>(HttpContext.User.Claims.Where(c => c.Type == "user").FirstOrDefault()?.Value ?? "");
-      Console.WriteLine("Logged in user:");
-      Console.WriteLine(payload?.Id);
       return Ok("This token is valid and the user is an admin.");
     }
     catch
     {
-      return StatusCode(9001);
+      return Unauthorized("There was a problem verifying the token.");
     }
   }
 
@@ -120,13 +113,11 @@ public class AuthenticationController : ControllerBase
     try
     {
       SecurityTokenPayload? payload = JsonSerializer.Deserialize<SecurityTokenPayload>(HttpContext.User.Claims.Where(c => c.Type == "user").FirstOrDefault()?.Value ?? "");
-      Console.WriteLine("Logged in user:");
-      Console.WriteLine(payload?.Id);
       return Ok("This token is valid and the user is a super admin.");
     }
     catch
     {
-      return StatusCode(9001);
+      return Unauthorized("There was a problem verifying the token.");
     }
   }
 }
