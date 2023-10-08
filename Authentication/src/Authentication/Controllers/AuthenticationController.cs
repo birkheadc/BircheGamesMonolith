@@ -78,7 +78,7 @@ public class AuthenticationController : ControllerBase
   {
     try
     {
-      SecurityTokenPayload? payload = JsonSerializer.Deserialize<SecurityTokenPayload>(HttpContext.User.Claims.Where(c => c.Type == "user").FirstOrDefault()?.Value ?? "");
+      // SecurityTokenPayload? payload = JsonSerializer.Deserialize<SecurityTokenPayload>(HttpContext.User.Claims.Where(c => c.Type == "user").FirstOrDefault()?.Value ?? "");
       return Ok("This token is valid.");
     }
     catch
@@ -95,7 +95,7 @@ public class AuthenticationController : ControllerBase
   {
     try
     {
-      SecurityTokenPayload? payload = JsonSerializer.Deserialize<SecurityTokenPayload>(HttpContext.User.Claims.Where(c => c.Type == "user").FirstOrDefault()?.Value ?? "");
+      // SecurityTokenPayload? payload = JsonSerializer.Deserialize<SecurityTokenPayload>(HttpContext.User.Claims.Where(c => c.Type == "user").FirstOrDefault()?.Value ?? "");
       return Ok("This token is valid and the user is an admin.");
     }
     catch
@@ -112,7 +112,7 @@ public class AuthenticationController : ControllerBase
   {
     try
     {
-      SecurityTokenPayload? payload = JsonSerializer.Deserialize<SecurityTokenPayload>(HttpContext.User.Claims.Where(c => c.Type == "user").FirstOrDefault()?.Value ?? "");
+      // SecurityTokenPayload? payload = JsonSerializer.Deserialize<SecurityTokenPayload>(HttpContext.User.Claims.Where(c => c.Type == "user").FirstOrDefault()?.Value ?? "");
       return Ok("This token is valid and the user is a super admin.");
     }
     catch

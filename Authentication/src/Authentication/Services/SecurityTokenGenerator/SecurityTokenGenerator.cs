@@ -30,11 +30,7 @@ public class SecurityTokenGenerator : ISecurityTokenGenerator
 
   private SecurityTokenDescriptor GetSecurityTokenDescriptor(UserEntity user)
   {
-    Dictionary<string, object> claims = new()
-    {
-      { "user", GeneratePayloadForUser(user) },
-      { ClaimTypes.Role, user.Role },
-    };
+    Dictionary<string, object> claims = GenerateClaimsForUser(user);
     return new SecurityTokenDescriptor()
     {
       Expires = DateTime.UtcNow.AddHours(config.LifespanHours),
@@ -48,18 +44,28 @@ public class SecurityTokenGenerator : ISecurityTokenGenerator
     };
   }
 
-  private SecurityTokenPayload GeneratePayloadForUser(UserEntity user)
+  private Dictionary<string, object> GenerateClaimsForUser(UserEntity user)
   {
-    return new SecurityTokenPayload()
+    Dictionary<string, object> claims = new()
     {
-      Id = user.Id,
-      EmailAddress = user.EmailAddress,
-      DisplayName = user.DisplayName,
-      Tag = user.Tag,
-      CreationDateTime = user.CreationDateTime,
-      Role = user.Role,
-      IsEmailVerified = user.IsEmailVerified,
-      IsDisplayNameChosen = user.IsDisplayNameChosen
+      { ClaimTypes.NameIdentifier, user.Id },
+      { ClaimTypes.Role, user.Role }
     };
+    return claims;
   }
+
+  // private SecurityTokenPayload GeneratePayloadForUser(UserEntity user)
+  // {
+  //   return new SecurityTokenPayload()
+  //   {
+  //     Id = user.Id,
+  //     EmailAddress = user.EmailAddress,
+  //     DisplayName = user.DisplayName,
+  //     Tag = user.Tag,
+  //     CreationDateTime = user.CreationDateTime,
+  //     Role = user.Role,
+  //     IsEmailVerified = user.IsEmailVerified,
+  //     IsDisplayNameChosen = user.IsDisplayNameChosen
+  //   };
+  // }
 }
