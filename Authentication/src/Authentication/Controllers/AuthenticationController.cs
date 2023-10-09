@@ -50,7 +50,8 @@ public class AuthenticationController : ControllerBase
     try
     {
       string auth = headers.Authorization;
-      string converted = Encoding.UTF8.GetString(Convert.FromBase64String(auth));
+      string token = auth.Substring(6);
+      string converted = Encoding.UTF8.GetString(Convert.FromBase64String(token));
       string[] split = converted.Split(':');
       if (split.Length == 2)
       {

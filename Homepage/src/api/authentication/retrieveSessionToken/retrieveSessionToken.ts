@@ -62,5 +62,5 @@ export default async function retrieveSessionToken(credentials: ICredentials): P
 }
 
 function credentialsToBasic(credentials: ICredentials): string {
-  return btoa(`${credentials.emailAddress}:${credentials.password}`);
+  return "Basic " + btoa(`${credentials.emailAddress}:${credentials.password}`);
 }

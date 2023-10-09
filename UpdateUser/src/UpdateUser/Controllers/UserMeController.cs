@@ -13,21 +13,31 @@ namespace UpdateUser.Controllers;
 public class UserMeController : ControllerBase
 {
 
-  private readonly IUserService userService;
+  private readonly IUserService _userService;
+  private readonly string _currentUserId;
 
   public UserMeController(IUserService userService)
   {
-    this.userService = userService;
+    _userService = userService;
+    _currentUserId = GetCurrentUserId();
+  }
+
+  private string GetCurrentUserId()
+  {
+    string? id = HttpContext.User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault()?.Value;
+    if (id is null)
+    {
+      throw new InternalServerErrorException("Error while attempting to get current user ID. NameIdentifier Claim was not found.");
+    }
+    return id;
   }
 
   [HttpGet]
   [Authorize]
   public async Task<ActionResult<UserResponseDTO>> GetUser()
   {
-    string? id = GetCurrentUserId();
-    if (id is null) return Unauthorized();
-    UserResponseDTO? user = await userService.GetUser(id);
-    if (user is null) return Unauthorized();
+    UserResponseDTO? user = await _userService.GetUser(_currentUserId);
+    if (user is null) return NotFound();
     return Ok(user);
   }
 
@@ -35,11 +45,7 @@ public class UserMeController : ControllerBase
   [Authorize]
   public async Task<IActionResult> PatchDisplayNameAndTag([FromBody] PatchDisplayNameAndTagRequest request)
   {
-    return Ok($"Change user to: {request.DisplayName}#{request.Tag}");
-  }
-
-  private string? GetCurrentUserId()
-  {
-    return HttpContext.User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault()?.Value;
+    bool wasSuccess = await _userService.PatchUserDisplayNameAndTag(_currentUserId, request);
+    return wasSuccess ? Ok() : BadRequest();
   }
 }
