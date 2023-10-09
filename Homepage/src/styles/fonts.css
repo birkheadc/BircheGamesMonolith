@@ -1,0 +1,13 @@
+:root {
+  --font-pri: 'Gabarito', cursive;
+  --font-h: 'Anton', sans-serif;
+  /* --font-h: 'Righteous', cursive; */
+}
+
+html {
+  font-family: var(--font-pri);
+}
+
+h1, h2 {
+  font-family: var(--font-h);
+}

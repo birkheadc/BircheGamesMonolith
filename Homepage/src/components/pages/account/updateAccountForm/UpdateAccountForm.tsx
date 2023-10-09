@@ -1,12 +1,13 @@
 import * as React from 'react';
 import './UpdateAccountForm.css'
 import { IUserDTO } from '../../../../types/user/user';
-import { IUpdateUserRequest } from '../../../../types/user/updateUser/updateUserRequest';
-import { IUpdateUserResponse } from '../../../../types/user/updateUser/updateUserResponse';
+import UpdateAccountFormDisplayNameSection from './displayNameSection/UpdateAccountFormDisplayNameSection';
+import { IUpdateDisplayNameRequest } from '../../../../types/api/requests/updateUser/updateDisplayNameRequest';
+import { IApiResponse } from '../../../../types/api/apiResponse';
 
 interface IUpdateAccountFormProps {
   user: IUserDTO,
-  submit: (request: IUpdateUserRequest) => Promise<IUpdateUserResponse>
+  updateDisplayName: (request: IUpdateDisplayNameRequest) => Promise<IApiResponse>
 }
 
 /**
@@ -17,7 +18,7 @@ export default function UpdateAccountForm(props: IUpdateAccountFormProps): JSX.E
 
   const user = props.user;
 
-  const [ request, setRequest ] = React.useState<IUpdateUserRequest>({
+  const [ request, setRequest ] = React.useState<IUpdateDisplayNameRequest>({
     displayName: user.displayName,
     tag: user.tag
   });
@@ -31,46 +32,20 @@ export default function UpdateAccountForm(props: IUpdateAccountFormProps): JSX.E
     }
   }, [ user ]);
 
-  const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
-    const name = event.currentTarget.name;
-    const value = event.currentTarget.value;
-    setRequest(r => {
-      const newRequest = {...r};
-      newRequest[name] = value;
-      return newRequest;
-    })
-  }
-
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    console.log("Submit: ", request);
-    props.submit(request);
-  }
-
   return (
-    <form className='update-account-form standard-form' onSubmit={handleSubmit}>
+    <div className='update-account-form standard-form'>
       <h1>Account Information</h1>
-      {error && <span className='error'>{error}</span>}
-      <div className='form-row'>
-        <div className='label-input-wrapper disabled'>
-          <label htmlFor='email'>Email Address</label>
-          <input disabled={true} id='email' type='email' name='emailAddress' value={user.emailAddress}></input>
+      {error && <span className='error standard-form-message'>{error}</span>}
+      <div className='update-account-form-section'>
+        <h2>Contact Information</h2>
+        <div className='form-row'>
+          <div className='label-input-wrapper disabled'>
+            <label htmlFor='email'>Email Address</label>
+            <input disabled={true} id='email' type='email' name='emailAddress' value={user.emailAddress}></input>
+          </div>
         </div>
       </div>
-      <div className='form-row'>
-      <div className='label-input-wrapper'>
-          <label htmlFor='display-name'>Display Name</label>
-          <input className='text-align-right' id='display-name' name='displayName' onChange={handleChange} value={request.displayName}></input>
-        </div>
-        <span className='display-name-hash-sign'>#</span>
-        <div className='label-input-wrapper'>
-          <label htmlFor='tag'>Tag</label>
-          <input id='tag' name='tag' onChange={handleChange} value={request.tag}></input>
-        </div>
-      </div>
-      <div className="form-row form-buttons-row">
-        <button type='submit'>Submit</button>
-      </div>
-    </form>
+      <UpdateAccountFormDisplayNameSection submit={props.updateDisplayName}/>
+    </div>
   );
 }

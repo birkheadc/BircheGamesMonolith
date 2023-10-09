@@ -7,6 +7,7 @@ import RegisterPage from './components/pages/register/RegisterPage';
 import './styles/reset.css';
 import './styles/shared.css';
 import './styles/vars.css';
+import './styles/fonts.css';
 import AccountPage from './components/pages/account/accountPage/AccountPage';
 import { IUserDTO } from './types/user/user';
 import LoginPage from './components/pages/login/LoginPage';
@@ -18,6 +19,7 @@ import GenerateVerificationEmailPage from './components/pages/emailVerification/
 import VerifyEmailPage from './components/pages/emailVerification/VerifyEmailPage';
 import LogoutPage from './components/pages/logout/LogoutPage';
 import AccountPageRouter from './components/pages/account/AccountPageRouter';
+import { IApiResponse } from './types/api/apiResponse';
 
 interface IRootProps {
 
@@ -29,19 +31,29 @@ interface IRootProps {
 */
 export default function Root(props: IRootProps): JSX.Element | null {
 
+  const [working, setWorking] = React.useState<boolean>(false);
   const [loggedInUser, setLoggedInUser] = React.useState<IUserDTO | null | undefined>(undefined);
 
   const nav = useNavigate();
 
-  React.useEffect(function checkStorageForTokenOnMount() {
-    const token: string | null = localStorage.getItem(SESSION_TOKEN_KEY);
-    if (token == null) {
-      setLoggedInUser(null);
-      return;
-    }
-    const payload = jwt_decode(token);
-    const user = helpers.getUserFromPayload(payload);
-    setLoggedInUser(user);
+  React.useEffect(() => {
+    (async function checkStorageForTokenOnMount() {
+      const token: string | null = localStorage.getItem(SESSION_TOKEN_KEY);
+      if (token == null) {
+        console.log("Could not find token to login automatically");
+        setLoggedInUser(null);
+        return;
+      }
+      setWorking(true);
+      const response: IApiResponse<IUserDTO> = await api.user.getCurrentUser(token);
+      if (response.wasSuccess === false || response.body == null) {
+        // Todo: Reroute to error page or something
+        return;
+      }
+    localStorage.setItem(SESSION_TOKEN_KEY, token);
+    setLoggedInUser(response.body);
+      setWorking(false);
+    })();
   }, []);
 
   const sendVerificationEmail = async (emailAddress: string | null) => {
@@ -51,15 +63,14 @@ export default function Root(props: IRootProps): JSX.Element | null {
     }
   }
 
-  const login = (sessionToken: string) => {
-    const payload = jwt_decode(sessionToken);
-    const user = helpers.getUserFromPayload(payload);
-    if (user == null) {
+  const login = async (sessionToken: string) => {
+    const response: IApiResponse<IUserDTO> = await api.user.getCurrentUser(sessionToken);
+    if (response.wasSuccess === false || response.body == null) {
       // Todo: Reroute to error page or something
       return;
     }
     localStorage.setItem(SESSION_TOKEN_KEY, sessionToken);
-    setLoggedInUser(user);
+    setLoggedInUser(response.body);
     nav('account');
   }
 
@@ -75,7 +86,7 @@ export default function Root(props: IRootProps): JSX.Element | null {
 
   if (loggedInUser === undefined) {
     return (
-      <h1>Loading...</h1>
+      <></>
     )
   }
 

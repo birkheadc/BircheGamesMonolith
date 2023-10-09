@@ -1,4 +1,11 @@
 # TODO
 
-- Need to rewrite account page, it assumes the entire user profile will be included in the jwt but this is no longer the case
-  - Instead, query the UpdateUser api for the user's data
+- Rethink form "working-overlay"
+  - What about large forms that the user scrolls through? Where should the spinner go?
+  - Instead, "working" should be handled by root, maybe a darken the screen, disable input, and unhide a spinner in the center of the screen
+
+- Work on standard form css
+  - Move more of the styles from account form into standard form
+
+- Work on account page
+  - Validate display name and tag, color labels when not good.

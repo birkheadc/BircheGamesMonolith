@@ -7,6 +7,7 @@ import { IUpdateUserResponse } from '../../../../types/user/updateUser/updateUse
 import { IUpdateUserRequest } from '../../../../types/user/updateUser/updateUserRequest';
 import api from '../../../../api';
 import WorkingOverlay from '../../../shared/workingOverlay/WorkingOverlay';
+import { IApiResponse } from '../../../../types/api/apiResponse';
 
 interface IAccountPageProps {
   user: IUserDTO | null,
@@ -29,9 +30,9 @@ export default function AccountPage(props: IAccountPageProps): JSX.Element | nul
     }
   }, [ props.user ]);
 
-  const submitUpdateUserRequest = async (request: IUpdateUserRequest): Promise<IUpdateUserResponse> => {
+  const submitUpdateUserRequest = async (request: IUpdateUserRequest): Promise<IApiResponse> => {
     setWorking(true);
-    const response = await api.user.updateUser(request);
+    const response = await api.user.changeDisplayName(request);
     setWorking(false);
     return response;
   }
@@ -39,11 +40,11 @@ export default function AccountPage(props: IAccountPageProps): JSX.Element | nul
   return (
     <div className='account-page-wrapper'>
       <h1>Account Page</h1>
-      <p>This is the account page. Only a verified user should be able to see this!</p>
-      <p>If you are not logged in, this page should be completely off limits.</p>
-      <p>If you are logged in, but your email is not verified, you should be redirected to a different page.</p>
+      <p>This is the account page. Only a verified user should be able to see this!
+      If you are not logged in, this page should be completely off limits.
+      If you are logged in, but your email is not verified, you should be redirected to a different page.</p>
       <br></br>
-      { props.user && <WorkingOverlay element={<UpdateAccountForm user={props.user} submit={submitUpdateUserRequest} />} isWorking={isWorking} /> }
+      { props.user && <WorkingOverlay element={<UpdateAccountForm user={props.user} updateDisplayName={submitUpdateUserRequest} />} isWorking={isWorking} /> }
     </div>
   );
 }

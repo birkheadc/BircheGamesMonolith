@@ -3,6 +3,10 @@ div.account-page-wrapper {
   margin: 0 auto;
 }
 
+div.account-page-wrapper p {
+  text-align: justify;
+}
+
 p.account-page-user-line-wrapper {
   display: flex;
   flex-direction: row;

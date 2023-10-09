@@ -2,3 +2,19 @@ span.display-name-hash-sign {
   padding: 0 0.3em;
   font-size: 1.5em;
 }
+
+.update-account-form-section {
+  border: var(--border-pri);
+  padding: 1rem 10px;
+  position: relative;
+}
+
+.update-account-form-section>h2 {
+  font-size: 1.2rem;
+  font-family: var(--font-h);
+  position: absolute;
+  left: 5px;
+  top: -0.8em;
+  padding: 0 5px;
+  background-color: var(--clr-white);
+}

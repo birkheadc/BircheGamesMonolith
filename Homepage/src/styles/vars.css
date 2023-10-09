@@ -1,11 +1,12 @@
 :root {
-  --clr-black: #31393C;
-  --clr-white: #FEF5EF;
-  --clr-disabled: #988476;
+  --clr-black: #02111B;
+  --clr-almost-white: #F5F5F5;
+  --clr-white: #FCFCFC;
+  --clr-disabled: #ADADAD;
   --clr-error: red;
 
-  --clr-accent-a: #E15554;
-  --clr-accent-b: #4D9DE0;
+  --clr-accent-a: #EA9010;
+  --clr-accent-b: #347FC4;
   
   --box-shadow-pri: 2px 2px 5px var(--clr-black);
 

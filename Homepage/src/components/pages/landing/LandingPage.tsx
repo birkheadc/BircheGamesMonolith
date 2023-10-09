@@ -11,6 +11,68 @@ interface ILandingPageProps {
 */
 export default function LandingPage(props: ILandingPageProps): JSX.Element | null {
   return (
-    <h1>Welcome to Birche Games</h1>
+    <>
+      <h1>Welcome to Birche Games</h1>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+      <p>Here we go again...</p>
+    </>
   );
 }

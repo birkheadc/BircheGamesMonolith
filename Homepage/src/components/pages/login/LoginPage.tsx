@@ -20,12 +20,12 @@ export default function LoginPage(props: ILoginPageProps): JSX.Element | null {
   const handleLogin = async (credentials: ICredentials) => {
     setWorking(true);
     const response = await api.authentication.retrieveSessionToken(credentials);
-    setWorking(false);
 
     if (response.wasSuccess && response.sessionToken) {
-      props.login(response.sessionToken);
+      await props.login(response.sessionToken);
     }
-    
+
+    setWorking(false);
     return response;
   }
 
