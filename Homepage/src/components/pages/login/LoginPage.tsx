@@ -15,7 +15,7 @@ interface ILoginPageProps {
 */
 export default function LoginPage(props: ILoginPageProps): JSX.Element | null {
 
-  const [working, setWorking] = React.useState<boolean>(false);
+  const [isWorking, setWorking] = React.useState<boolean>(false);
 
   const handleLogin = async (credentials: ICredentials) => {
     setWorking(true);
@@ -31,7 +31,7 @@ export default function LoginPage(props: ILoginPageProps): JSX.Element | null {
 
   return (
     <div className='login-page-wrapper'>
-      <WorkingOverlay element={<LoginForm submit={handleLogin} />} isWorking={working} />
+      <WorkingOverlay element={<LoginForm submit={handleLogin} />} isWorking={isWorking} />
     </div>
   );
 }

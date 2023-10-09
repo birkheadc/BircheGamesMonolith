@@ -1,3 +1,4 @@
+using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using UserRegistration.Models;
 using UserRegistration.Services;
@@ -29,7 +30,7 @@ public class UserRegistrationController : ControllerBase
   {
     try
     {
-      CreateUserResponse response = await userService.CreateNewUser(newUser);
+      Response response = await userService.CreateNewUser(newUser);
       if (response.WasSuccess)
       {
         return Ok();

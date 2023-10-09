@@ -1,10 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
 using Amazon.DynamoDBv2.DataModel;
 using Amazon.DynamoDBv2;
 using Domain.Models;
-using UserRegistration.Models;
-using Amazon.DynamoDBv2.DocumentModel;
-using Amazon.DynamoDBv2.Model;
 
 namespace UserRegistration.Repositories;
 
@@ -21,10 +17,10 @@ public class UserRepository : IUserRepository
     context = new DynamoDBContext(amazonDynamoDB, config);
   }
 
-  public async Task<CreateUserResponse> CreateNewUser(UserEntity entity)
+  public async Task<Response> CreateNewUser(UserEntity entity)
   {
     bool isEmailAddressUnique = await IsEmailAddressUnique(entity.EmailAddress);
-    CreateUserResponse response = new();
+    ResponseBuilder responseBuilder = new();
 
     if (isEmailAddressUnique == false)
     {
@@ -35,25 +31,27 @@ public class UserRepository : IUserRepository
 
       // Todo: Logging
       // Todo: Alert the email service that a new user attempted to register with an existing email address.
-      return response;
-    }
-    if (response.WasSuccess == false)
-    {
-      return response;
+      return responseBuilder
+        .Succeed()
+        .Build();
     }
 
     try
     {
       await context.SaveAsync(entity);
-      return response;
+      return responseBuilder
+        .Succeed()
+        .Build();
     }
     catch (Exception e)
     {
       // Todo: Logging
       Console.WriteLine("Exception when attempting to create new user.");
       Console.WriteLine(e);
-      response.Errors.Add(new(){ Field = "", StatusCode = 0 });
-      return response;
+      return responseBuilder
+        .Fail()
+        .WithGeneralError(0, "Something unexpected happened.")
+        .Build();
     }
   }
 

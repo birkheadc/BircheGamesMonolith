@@ -8,11 +8,11 @@ namespace Domain.Authorization;
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
 public class RequiresRoleAttribute : Attribute, IAuthorizationFilter
 {
-  private readonly UserRole requiredRole;
+  private readonly UserRole _requiredRole;
 
   public RequiresRoleAttribute(UserRole requiredRole)
   {
-    this.requiredRole = requiredRole;
+    this._requiredRole = requiredRole;
   }
   public void OnAuthorization(AuthorizationFilterContext context)
   {
@@ -26,7 +26,7 @@ public class RequiresRoleAttribute : Attribute, IAuthorizationFilter
     try
     {
       UserRole userRole = (UserRole)int.Parse(roleClaim.Value);
-      if (userRole < requiredRole)
+      if (userRole < _requiredRole)
       {
         context.Result = new ForbidResult();
         return;

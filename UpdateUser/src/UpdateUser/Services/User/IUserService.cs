@@ -6,5 +6,5 @@ namespace UpdateUser.Services;
 public interface IUserService
 {
   public Task<UserResponseDTO?> GetUser(string id);
-  public Task<bool> PatchUserDisplayNameAndTag(string userId, PatchDisplayNameAndTagRequest request);
+  public Task<Response> PatchUserDisplayNameAndTag(string userId, PatchDisplayNameAndTagRequest request);
 }

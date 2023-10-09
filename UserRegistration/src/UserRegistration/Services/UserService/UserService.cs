@@ -18,20 +18,22 @@ public class UserService : IUserService
     this.userRepository = userRepository;
   }
 
-  public async Task<CreateUserResponse> CreateNewUser(CreateUserRequestDTO newUser)
+  public async Task<Response> CreateNewUser(CreateUserRequestDTO newUser)
   {
+    ResponseBuilder responseBuilder = new();
+
     Console.WriteLine("Attempting to create new user:");
     Console.WriteLine($"Email: {newUser.EmailAddress} | Password: {newUser.Password} | Repeat Password: {newUser.RepeatPassword}");
-    List<CreateUserError> errors = userValidator.Validate(newUser);
+    List<ResponseError> errors = userValidator.Validate(newUser);
     if (errors.Count > 0)
     {
-      return new CreateUserResponse(){
-        WasSuccess = false,
-        Errors = errors
-      };
+      return responseBuilder
+        .Succeed()
+        .WithErrors(errors)
+        .Build();
     }
     UserEntity entity = userConverter.ToEntity(newUser);
-    CreateUserResponse response = await userRepository.CreateNewUser(entity);
+    Response response = await userRepository.CreateNewUser(entity);
     return response;
   }
 }

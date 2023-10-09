@@ -49,7 +49,8 @@ public class SecurityTokenGenerator : ISecurityTokenGenerator
     Dictionary<string, object> claims = new()
     {
       { ClaimTypes.NameIdentifier, user.Id },
-      { ClaimTypes.Role, user.Role }
+      { ClaimTypes.Role, user.Role },
+      { "IsEmailVerified", user.IsEmailVerified ? "1" : "0" }
     };
     return claims;
   }

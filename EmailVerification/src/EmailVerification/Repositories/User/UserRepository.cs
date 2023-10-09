@@ -20,7 +20,7 @@ public class UserRepository : IUserRepository
   {
     DynamoDBOperationConfig config = new()
     {
-      IndexName = "EmailAddress-index"
+      IndexName = "EmailAddress-index",
     };
 
     List<UserEntity> users = await context.QueryAsync<UserEntity>(emailAddress, config).GetRemainingAsync();
