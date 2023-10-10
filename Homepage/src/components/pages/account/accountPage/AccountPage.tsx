@@ -3,13 +3,13 @@ import './AccountPage.css'
 import { IUserDTO } from '../../../../types/user/user';
 import { createSearchParams, useNavigate } from 'react-router-dom';
 import UpdateAccountForm from '../updateAccountForm/UpdateAccountForm';
-import { IUpdateUserResponse } from '../../../../types/user/updateUser/updateUserResponse';
-import { IUpdateUserRequest } from '../../../../types/user/updateUser/updateUserRequest';
 import api from '../../../../api';
-import WorkingOverlay from '../../../shared/workingOverlay/WorkingOverlay';
 import { IApiResponse } from '../../../../types/api/apiResponse';
+import { IUpdateDisplayNameRequest } from '../../../../types/api/requests/updateUser/updateDisplayNameRequest';
+import helpers from '../../../../helpers';
 
 interface IAccountPageProps {
+  setWorking: (isWorking: boolean) => void,
   user: IUserDTO | null,
 }
 
@@ -18,8 +18,6 @@ interface IAccountPageProps {
 * @returns {JSX.Element | null}
 */
 export default function AccountPage(props: IAccountPageProps): JSX.Element | null {
-
-  const [isWorking, setWorking] = React.useState<boolean>(false);
 
   const nav = useNavigate();
 
@@ -30,10 +28,10 @@ export default function AccountPage(props: IAccountPageProps): JSX.Element | nul
     }
   }, [ props.user ]);
 
-  const submitUpdateUserRequest = async (request: IUpdateUserRequest): Promise<IApiResponse> => {
-    setWorking(true);
+  const submitUpdateUserRequest = async (request: IUpdateDisplayNameRequest): Promise<IApiResponse> => {
+    props.setWorking(true);
     const response = await api.user.changeDisplayName(request);
-    setWorking(false);
+    props.setWorking(false);
     return response;
   }
 
@@ -44,7 +42,7 @@ export default function AccountPage(props: IAccountPageProps): JSX.Element | nul
       If you are not logged in, this page should be completely off limits.
       If you are logged in, but your email is not verified, you should be redirected to a different page.</p>
       <br></br>
-      { props.user && <WorkingOverlay element={<UpdateAccountForm user={props.user} updateDisplayName={submitUpdateUserRequest} />} isWorking={isWorking} /> }
+      { props.user && <UpdateAccountForm user={props.user} updateDisplayName={submitUpdateUserRequest} />}
     </div>
   );
 }

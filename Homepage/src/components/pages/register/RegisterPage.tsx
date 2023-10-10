@@ -3,10 +3,11 @@ import './RegisterPage.css'
 import UserRegisterForm from './userRegisterForm/UserRegisterForm';
 import INewUser from '../../../types/user/newUser/newUser';
 import api from '../../../api';
-import WorkingOverlay from '../../shared/workingOverlay/WorkingOverlay';
 import { createSearchParams, useNavigate } from 'react-router-dom';
+import helpers from '../../../helpers';
 
 interface IRegisterPageProps {
+  setWorking: (isWorking: boolean, message: string | null) => void,
   sendVerificationEmail: (address: string) => void
 }
 
@@ -16,15 +17,14 @@ interface IRegisterPageProps {
 */
 export default function RegisterPage(props: IRegisterPageProps): JSX.Element | null {
 
-  const [working, setWorking] = React.useState<boolean>(false);
   const [errors, setErrors] = React.useState<string[]>([]);
 
   const nav = useNavigate();
 
   const handleSubmitNewUser = async (user: INewUser) => {
-    setWorking(true);
+    props.setWorking(true, "Creating New User");
     const response = await api.registration.createUser(user);
-    setWorking(false);
+    props.setWorking(false, null);
     if (response.wasSuccess) {
       props.sendVerificationEmail(user.emailAddress);
       nav({ pathname: '/email-verification/generate', search: `?${createSearchParams({ address: user.emailAddress })}` });
@@ -43,7 +43,7 @@ export default function RegisterPage(props: IRegisterPageProps): JSX.Element | n
   return (
     <div className='register-page-wrapper'>
       <div className='register-page-form-wrapper'>
-        <WorkingOverlay element={<UserRegisterForm submit={handleSubmitNewUser} errorMessages={errors}/>} isWorking={working} />
+        <UserRegisterForm submit={handleSubmitNewUser} errorMessages={errors}/>
       </div>
     </div>
   );

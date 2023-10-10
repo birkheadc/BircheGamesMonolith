@@ -1,0 +1,30 @@
+div#working-overlay-wrapper {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  pointer-events: none;
+}
+
+div#working-overlay-window {
+  position: relative;
+  width: min(50vh, 50vw);
+  height: min(50vh, 50vw);
+  background-color: var(--clr-white);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  border: var(--border-pri);
+  box-shadow: var(--box-shadow-pri);
+  font-size: 2rem;
+}
+
+div#working-overlay-window>span {
+  position: absolute;
+  bottom: 0;
+  padding: 0.5em;
+}

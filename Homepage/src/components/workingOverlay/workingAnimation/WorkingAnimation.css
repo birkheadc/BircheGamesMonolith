@@ -1,0 +1,36 @@
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+div.working-animation-wrapper {
+  animation-name: spin;
+  animation-duration: 8s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  border: dashed 20px var(--clr-accent-a);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50%;
+  width: 50%;
+}
+
+div.working-animation-wrapper>img {
+  animation-name: spin;
+  animation-duration: 8s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-direction: reverse;
+  background-color: var(--clr-accent-a);
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+}

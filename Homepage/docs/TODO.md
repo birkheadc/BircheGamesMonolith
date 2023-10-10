@@ -9,3 +9,5 @@
 
 - Work on account page
   - Validate display name and tag, color labels when not good.
+
+- Get better resolution version of / new icon
