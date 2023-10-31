@@ -9,22 +9,24 @@ div#working-overlay-wrapper {
 }
 
 div#working-overlay-window {
+  padding: 10px;
   position: relative;
-  width: min(50vh, 50vw);
-  height: min(50vh, 50vw);
+  width: min(80vh, 80vw, 300px);
+  height: min(80vh, 80vw, 300px);
   background-color: var(--clr-white);
   display: flex;
   flex-direction: column;
   gap: 10px;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   border: var(--border-pri);
   box-shadow: var(--box-shadow-pri);
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 div#working-overlay-window>span {
-  position: absolute;
-  bottom: 0;
   padding: 0.5em;
+  text-align: center;
+  font-family: var(--font-h);
+  max-height: 40%;
 }

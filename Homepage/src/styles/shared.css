@@ -98,6 +98,10 @@ div.form-buttons-row {
   align-items: center;
 }
 
+.header-font {
+  font-family: var(--font-h);
+}
+
 .bold {
   font-weight: bold;
 }
