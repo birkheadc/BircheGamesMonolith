@@ -36,7 +36,8 @@ public class UserMeController : ControllerBase
   public async Task<ActionResult<Response>> PatchDisplayNameAndTag([FromBody] PatchDisplayNameAndTagRequest request)
   {
     Response response = await _userService.PatchUserDisplayNameAndTag(GetCurrentUserId(), request);
-    return response;
+    if (response.WasSuccess) return Ok();
+    return Problem(response.Errors[0].Message, statusCode: response.Errors[0].StatusCode);
   }
 
   private string GetCurrentUserId()

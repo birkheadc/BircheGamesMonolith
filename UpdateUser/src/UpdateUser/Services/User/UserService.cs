@@ -23,6 +23,15 @@ public class UserService : IUserService
   public async Task<Response> PatchUserDisplayNameAndTag(string userId, PatchDisplayNameAndTagRequest request)
   {
     ResponseBuilder responseBuilder = new();
+
+    List<ResponseError> validationErrors = ValidateFields(request);
+    if (validationErrors.Count > 0)
+    {
+      return responseBuilder
+        .Fail()
+        .WithErrors(validationErrors)
+        .Build();
+    }
     
     UserEntity? user = await _userRepository.GetUser(userId);
     if (user is null)
@@ -60,5 +69,17 @@ public class UserService : IUserService
     return responseBuilder
       .Succeed()
       .Build();
+  }
+
+  private List<ResponseError> ValidateFields(PatchDisplayNameAndTagRequest request)
+  {
+    UserValidator userValidator = new();
+
+    Response validationResponse = userValidator
+      .WithDisplayName(request.DisplayName)
+      .WithTag(request.Tag)
+      .Validate();
+
+    return validationResponse.Errors;
   }
 }
