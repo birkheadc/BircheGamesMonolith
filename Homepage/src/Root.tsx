@@ -112,7 +112,7 @@ export default function Root(props: IRootProps): JSX.Element | null {
           <Route path={'/logout'} element={<LogoutPage logout={logout} />} />
           <Route path={'/email-verification/generate'} element={<GenerateVerificationEmailPage resend={sendVerificationEmail}/>} />
           <Route path={'email-verification/verify'} element={<VerifyEmailPage />} />
-          <Route path={'/account/*'} element={<AccountPageRouter loggedInUser={loggedInUser} />} />
+          <Route path={'/account/*'} element={<AccountPageRouter token={localStorage.getItem(SESSION_TOKEN_KEY)} setWorking={handleSetWorking} loggedInUser={loggedInUser} />} />
           <Route path={'/register'} element={<RegisterPage setWorking={handleSetWorking} sendVerificationEmail={sendVerificationEmail} />} />
           <Route path={'/'} element={<LandingPage />}/>
           <Route path={ '*' } element={ <Navigate replace={true} to={{ pathname: '/' }} /> } ></Route>

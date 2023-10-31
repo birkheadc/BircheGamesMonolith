@@ -9,7 +9,8 @@ import { IUpdateDisplayNameRequest } from '../../../../types/api/requests/update
 import helpers from '../../../../helpers';
 
 interface IAccountPageProps {
-  setWorking: (isWorking: boolean) => void,
+  token: string | null,
+  setWorking: (isWorking: boolean, message: string | null) => void,
   user: IUserDTO | null,
 }
 
@@ -29,9 +30,10 @@ export default function AccountPage(props: IAccountPageProps): JSX.Element | nul
   }, [ props.user ]);
 
   const submitUpdateUserRequest = async (request: IUpdateDisplayNameRequest): Promise<IApiResponse> => {
-    props.setWorking(true);
-    const response = await api.user.changeDisplayName(request);
-    props.setWorking(false);
+    props.setWorking(true, "Updating");
+    const response = await api.user.changeDisplayName(props.token, request);
+    console.log(response);
+    props.setWorking(false, null);
     return response;
   }
 

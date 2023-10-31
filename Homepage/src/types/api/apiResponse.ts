@@ -6,7 +6,7 @@ export interface IApiResponse<T = never> {
   errors: IApiError[]
 }
 
-export class ApiResponseBuilder<T> {
+export class ApiResponseBuilder<T = never> {
   apiResponse: IApiResponse<T> = {
     wasSuccess: false,
     body: undefined,

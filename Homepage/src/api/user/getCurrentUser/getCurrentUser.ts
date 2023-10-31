@@ -13,7 +13,6 @@ export default async function getCurrentUser(token: string): Promise<IApiRespons
   }
   const controller = new AbortController();
   const timeout = setTimeout(() => {
-    console.log("Timed out, aborting locally.");
     controller.abort();
   }, config.general.apiCallTimeout);
 
