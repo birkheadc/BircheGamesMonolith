@@ -1,14 +1,42 @@
+using System.Net.Mail;
 using System.Text.RegularExpressions;
+using Domain.Config;
 
 namespace Domain.Models;
 
 public class UserValidator
 {
-  List<ResponseError> _errors = new();
+  private readonly UserValidatorConfig _config;
+  private List<ResponseError> _errors = new();
+
+  public UserValidator()
+  {
+    _config = new()
+    {
+      DisplayNameMinChars = 1,
+      DisplayNameMaxChars = 16,
+      TagChars = 6,
+      PasswordMinChars = 8,
+      PasswordMaxChars = 32
+    };
+  }
+
+  public UserValidator WithEmailAddress(string emailAddress)
+  {
+    try
+    {
+      MailAddress mailAddress = new(emailAddress);
+    }
+    catch
+    {
+      _errors.Add(new(){ Field = "EmailAddress", StatusCode = 422, Message = "Email Address format is invalid." });
+    }
+    return this;
+  }
+  
   public UserValidator WithDisplayName(string displayName)
   {
-    ResponseBuilder responseBuilder = new();
-    if (displayName.Length == 0)
+    if (displayName.Length == _config.DisplayNameMinChars)
     {
       _errors.Add(new ResponseError()
       {
@@ -18,7 +46,7 @@ public class UserValidator
       });
     }
 
-    if (displayName.Length > 16)
+    if (displayName.Length > _config.DisplayNameMaxChars)
     {
       _errors.Add(new ResponseError()
       {
@@ -44,10 +72,8 @@ public class UserValidator
   }
 
   public UserValidator WithTag(string tag)
-  {
-    ResponseBuilder responseBuilder = new();
-    
-    if (tag.Length != 6)
+  {  
+    if (tag.Length != _config.TagChars)
     {
       _errors.Add(new ResponseError()
       {
@@ -69,6 +95,14 @@ public class UserValidator
       });
     }
 
+    return this;
+  }
+
+  public UserValidator WithPassword(string password, string? repeatPassword = null)
+  {
+    if (repeatPassword is not null && password != repeatPassword) _errors.Add(new(){ Field = "Password", StatusCode = 422, Message = "Password and Repeat Password do not match."});
+    if (password.Length < _config.PasswordMinChars) _errors.Add(new(){ Field = "Password", StatusCode = 422, Message = "Password is too short." });
+    if (password.Length > _config.PasswordMaxChars) _errors.Add(new(){ Field = "Password", StatusCode = 422, Message = "Password is too long." });
     return this;
   }
 

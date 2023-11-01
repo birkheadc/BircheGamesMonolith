@@ -8,13 +8,11 @@ namespace UserRegistration.Services;
 public class UserService : IUserService
 {
   private readonly IUserConverter userConverter;
-  private readonly IUserValidator userValidator;
   private readonly IUserRepository userRepository;
 
-  public UserService(IUserConverter userConverter, IUserValidator userValidator, IUserRepository userRepository)
+  public UserService(IUserConverter userConverter, IUserRepository userRepository)
   {
     this.userConverter = userConverter;
-    this.userValidator = userValidator;
     this.userRepository = userRepository;
   }
 
@@ -24,16 +22,28 @@ public class UserService : IUserService
 
     Console.WriteLine("Attempting to create new user:");
     Console.WriteLine($"Email: {newUser.EmailAddress} | Password: {newUser.Password} | Repeat Password: {newUser.RepeatPassword}");
-    List<ResponseError> errors = userValidator.Validate(newUser);
+
+    List<ResponseError> errors = Validate(newUser);
+
     if (errors.Count > 0)
     {
       return responseBuilder
-        .Succeed()
+        .Fail()
         .WithErrors(errors)
         .Build();
     }
     UserEntity entity = userConverter.ToEntity(newUser);
     Response response = await userRepository.CreateNewUser(entity);
     return response;
+  }
+
+  private List<ResponseError> Validate(CreateUserRequestDTO request)
+  {
+    UserValidator validator = new();
+    Response response = validator
+      .WithPassword(request.Password, request.RepeatPassword)
+      .WithEmailAddress(request.EmailAddress)
+      .Validate();
+    return response.Errors;
   }
 }

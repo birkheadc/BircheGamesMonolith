@@ -15,9 +15,9 @@ services.AddControllers();
 services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
 services.AddAWSService<IAmazonDynamoDB>();
 
-UserValidatorConfig userValidatorConfig = new();
-config.GetSection("UserValidatorConfig").Bind(userValidatorConfig);
-services.AddSingleton(userValidatorConfig);
+// UserValidatorConfig userValidatorConfig = new();
+// config.GetSection("UserValidatorConfig").Bind(userValidatorConfig);
+// services.AddSingleton(userValidatorConfig);
 
 SecurityTokenConfig securityTokenConfig = new();
 config.GetSection("SecurityTokenConfig").Bind(securityTokenConfig);
@@ -26,7 +26,7 @@ services.AddSingleton(securityTokenConfig);
 
 services.AddSingleton<IPasswordHasher, PasswordHasher>();
 services.AddSingleton<IUserConverter, UserConverter>();
-services.AddSingleton<IUserValidator, UserValidator>();
+// services.AddSingleton<IUserValidator, UserValidator>();
 services.AddSingleton<IUserRepository, UserRepository>();
 services.AddSingleton<IUserService, UserService>();
 
