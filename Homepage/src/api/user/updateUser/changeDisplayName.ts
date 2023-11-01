@@ -39,7 +39,7 @@ export default async function changeDisplayName(token: string | null, request: I
         .succeed()
         .build();
     }
-    const data = await response.json();
+    const data = await response.json(); 
     console.log("Data: ", data);
     return builder
       .fail()

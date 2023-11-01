@@ -1,9 +1,10 @@
 import config from "../../../config";
+import { IApiResponse } from "../../../types/api/apiResponse";
 import ICreateUserResponse from "../../../types/user/newUser/createUserResponse";
 import INewUser from "../../../types/user/newUser/newUser";
 import validateLocal from "../validateLocal/validateLocal";
 
-export default async function createUser(user: INewUser): Promise<ICreateUserResponse> {
+export default async function createUser(user: INewUser): Promise<IApiResponse> {
 
   const url = config.registration.apiUrl;
   if (url == null) return {
@@ -34,21 +35,8 @@ export default async function createUser(user: INewUser): Promise<ICreateUserRes
     );
 
     if (response.status !== 200) {
-      try {
-        let data = await response.json() as ICreateUserResponse;
-        return data;
-      } catch {
-        return {
-          wasSuccess: false,
-          errors: [
-            {
-              field: '',
-              statusCode: 500,
-              errorMessage: 'Unexpected response format.'
-            }
-          ]
-        }
-      }
+      let data = await response.json();
+      return data;
     }
 
     return {

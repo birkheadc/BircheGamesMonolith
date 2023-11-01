@@ -4,60 +4,28 @@ import ICreateUserResponse from "../../../types/user/newUser/createUserResponse"
 import INewUser from "../../../types/user/newUser/newUser";
 
 import * as EmailValidator from 'email-validator';
+import UserValidator from "../../helpers/userValidator/userValidator";
+import { IApiResponse } from "../../../types/api/apiResponse";
 
-export default function validateLocal(user: INewUser): ICreateUserResponse {
+export default function validateLocal(user: INewUser): IApiResponse {
 
-  const validationConfig = config.registration.newUserValidation;
+  let validator = new UserValidator();
 
-  let wasSuccess = true;
-  const errors: ICreateUserError[] = [];
-
-  if (user.password.length > 0 && user.password.length < validationConfig.passwordMinChars) {
-    wasSuccess = false;
-    const error: ICreateUserError = {
-      field: "password",
-      statusCode: 422,
-      errorMessage: "Password is too short."
-    }
-    errors.push(error);
+  if (user.password.length > 0) {
+    validator = validator.withPassword(user.password, user.repeatPassword);
   }
 
-  if (user.password.length > validationConfig.passwordMaxChars) {
-    wasSuccess = false;
-    const error: ICreateUserError = {
-      field: "password",
-      statusCode: 422,
-      errorMessage: "Password is too long."
-    }
-    errors.push(error);
+  if (user.emailAddress.length > 0) {
+    validator = validator.withEmailAddress(user.emailAddress);
   }
 
-  if (user.password !== user.repeatPassword) {
-    wasSuccess = false;
-    const error: ICreateUserError = {
-      field: "repeatPassword",
-      statusCode: 422,
-      errorMessage: "Password is not the same in both fields."
-    }
-    errors.push(error);
-  }
+  const result = validator.validate();
 
-  if (user.emailAddress.length > 0 && EmailValidator.validate(user.emailAddress) === false) {
-    wasSuccess = false;
-    const error: ICreateUserError = {
-      field: "emailAddress",
-      statusCode: 422,
-      errorMessage: "Email Address format is invalid."
-    }
-    errors.push(error);
-  }
-
+  // If fields are empty, we assume the user hasn't started them yet so we don't validate them individually.
+  // But we make sure to fail the final validation if any are empty, so that the submit button will be disabled.
   if (user.emailAddress.length < 1 || user.password.length < 1 || user.repeatPassword.length < 1) {
-    wasSuccess = false;
+    result.wasSuccess = false;
   }
 
-  return {
-    wasSuccess,
-    errors
-  };
+  return result;
 }
