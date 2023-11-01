@@ -79,6 +79,8 @@ div.label-input-wrapper>label {
   top: -0.6em;
   padding: 0 5px;
   background-color: var(--clr-white);
+  user-select: none;
+  pointer-events: none;
 }
 
 div.label-input-wrapper>input {

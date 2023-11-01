@@ -18,19 +18,7 @@ export default function UpdateAccountForm(props: IUpdateAccountFormProps): JSX.E
 
   const user = props.user;
 
-  const [ request, setRequest ] = React.useState<IUpdateDisplayNameRequest>({
-    displayName: user.displayName,
-    tag: user.tag
-  });
-
   const [ error, setError] = React.useState<string | undefined>(undefined);
-
-  React.useEffect(function clearDisplayNameAndTagIfNotYetChosen() {
-    if (user.isDisplayNameChosen === false) {
-      setRequest(r => ({ ...r, displayName: '', tag: '' }));
-      setError('Create a display name and tag that your friends can find you by!');
-    }
-  }, [ user ]);
 
   return (
     <div className='update-account-form standard-form'>
@@ -45,7 +33,7 @@ export default function UpdateAccountForm(props: IUpdateAccountFormProps): JSX.E
           </div>
         </div>
       </div>
-      <UpdateAccountFormDisplayNameSection submit={props.updateDisplayName}/>
+      <UpdateAccountFormDisplayNameSection isDisplayNameChosen={props.user.isDisplayNameChosen} request={{ displayName: props.user.displayName, tag: props.user.tag}} submit={props.updateDisplayName}/>
     </div>
   );
 }

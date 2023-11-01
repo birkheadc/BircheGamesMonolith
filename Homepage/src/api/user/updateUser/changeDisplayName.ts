@@ -33,15 +33,17 @@ export default async function changeDisplayName(token: string | null, request: I
       },
       body: JSON.stringify(request)
     });
-    const data = await response.json();
-    if (response.status !== 200) {
+    console.log("Response: ", response);
+    if (response.status === 200) {
       return builder
-        .fail()
-        .withGeneralError(response.status, data.detail)
+        .succeed()
         .build();
     }
+    const data = await response.json();
+    console.log("Data: ", data);
     return builder
-      .succeed()
+      .fail()
+      .withGeneralError(response.status, data.detail)
       .build();
   } catch {
     return builder

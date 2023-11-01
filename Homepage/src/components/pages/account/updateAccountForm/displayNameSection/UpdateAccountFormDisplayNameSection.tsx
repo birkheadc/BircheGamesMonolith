@@ -5,6 +5,8 @@ import { IApiResponse } from '../../../../../types/api/apiResponse';
 
 interface IUpdateAccountFormDisplayNameSectionProps {
   submit: (request: IUpdateDisplayNameRequest) => Promise<IApiResponse>
+  isDisplayNameChosen: boolean,
+  request: IUpdateDisplayNameRequest
 }
 
 /**
@@ -13,10 +15,22 @@ interface IUpdateAccountFormDisplayNameSectionProps {
 */
 export default function UpdateAccountFormDisplayNameSection(props: IUpdateAccountFormDisplayNameSectionProps): JSX.Element | null {
 
+  const [isDisplayNameChosen, setDisplayNameChosen] = React.useState<boolean>(props.isDisplayNameChosen);
   const [request, setRequest] = React.useState<IUpdateDisplayNameRequest>({
     displayName: '',
     tag: ''
   });
+
+  const [ message, setMessage ] = React.useState<string | undefined>(undefined);
+
+  React.useEffect(function clearDisplayNameAndTagIfNotYetChosen() {
+    if (props.isDisplayNameChosen === false) {
+      setRequest({ displayName: '', tag: '' });
+      setMessage('Create a display name and tag that your friends can find you by!');
+    } else {
+      setRequest(props.request);
+    }
+  }, [ props.isDisplayNameChosen ]);
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
     const name = event.currentTarget.name;
@@ -28,28 +42,35 @@ export default function UpdateAccountFormDisplayNameSection(props: IUpdateAccoun
     })
   }
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     console.log("Submit display name change request: ", request);
-    props.submit(request);
+    const result = await props.submit(request);
+    if (result.wasSuccess === false) {
+      setMessage(result.errors.length > 0 ? result.errors[0].errorMessage : "Something went wrong...");
+    } else {
+      setMessage(`Success! Your display name is now ${request.displayName}#${request.tag}!`);
+      setDisplayNameChosen(true);
+    }
   }
 
   return (
     <form className='update-account-form-section' onSubmit={handleSubmit}>
+      {message && <span className='error standard-form-message'>{message}</span>}
       <h2>Display Name</h2>
       <div className='form-row'>
-      <div className='label-input-wrapper'>
+      <div className={`label-input-wrapper${isDisplayNameChosen ? ' disabled' : ''}`}>
           <label htmlFor='display-name'>Display Name</label>
-          <input className='text-align-right' id='display-name' name='displayName' onChange={handleChange} value={request.displayName}></input>
+          <input disabled={isDisplayNameChosen} className='text-align-right' id='display-name' name='displayName' onChange={handleChange} value={request.displayName}></input>
         </div>
         <span className='display-name-hash-sign'>#</span>
-        <div className='label-input-wrapper'>
+        <div className={`label-input-wrapper${isDisplayNameChosen ? ' disabled' : ''}`}>
           <label htmlFor='tag'>Tag</label>
-          <input id='tag' name='tag' onChange={handleChange} value={request.tag}></input>
+          <input disabled={isDisplayNameChosen} id='tag' name='tag' onChange={handleChange} value={request.tag}></input>
         </div>
       </div>
       <div className="form-row form-buttons-row">
-        <button type='submit'>Submit</button>
+        <button disabled={isDisplayNameChosen} type='submit'>Submit</button>
       </div>
     </form>
   );
