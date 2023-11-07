@@ -50,4 +50,6 @@ if (app.Environment.IsDevelopment() == false)
 app.UseAuthorization();
 app.MapControllers();
 
+Console.WriteLine($"User Registration API launched in {app.Environment.EnvironmentName} mode.");
+
 app.Run();

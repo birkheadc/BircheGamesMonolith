@@ -69,5 +69,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
+Console.WriteLine($"Update User API launched in {app.Environment.EnvironmentName} mode.");
 
 app.Run();
