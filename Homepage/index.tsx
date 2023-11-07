@@ -4,6 +4,7 @@ import Root from "./src/Root";
 import { BrowserRouter } from "react-router-dom";
 
 import Modal from 'react-modal';
+import { UserProvider } from "./src/contexts/userContext/UserContext";
 
 Modal.setAppElement('#react-root');
 Modal.defaultStyles.content = {};
@@ -16,5 +17,5 @@ Modal.defaultStyles.overlay = {
 const container = document.getElementById("react-root");
 if (container != null) {
   const root = createRoot(container);
-  root.render(<BrowserRouter><Root /></BrowserRouter>);
+  root.render(<BrowserRouter><UserProvider><Root /></UserProvider></BrowserRouter>);
 }

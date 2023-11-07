@@ -1,4 +1,5 @@
 export interface IUpdateDisplayNameRequest {
   displayName: string,
-  tag: string
+  tag: string,
+  [key: string]: string
 }

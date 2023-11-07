@@ -8,12 +8,9 @@ import './styles/reset.css';
 import './styles/shared.css';
 import './styles/vars.css';
 import './styles/fonts.css';
-import AccountPage from './components/pages/account/accountPage/AccountPage';
 import { IUserDTO } from './types/user/user';
 import LoginPage from './components/pages/login/LoginPage';
 
-import jwt_decode from 'jwt-decode';
-import helpers from './helpers';
 import api from './api';
 import GenerateVerificationEmailPage from './components/pages/emailVerification/GenerateVerificationEmailPage';
 import VerifyEmailPage from './components/pages/emailVerification/VerifyEmailPage';
@@ -22,6 +19,7 @@ import AccountPageRouter from './components/pages/account/AccountPageRouter';
 import { IApiResponse } from './types/api/apiResponse';
 import DevPage from './components/pages/dev/DevPage';
 import WorkingOverlay from './components/workingOverlay/WorkingOverlay';
+import { UserContext } from './contexts/userContext/UserContext';
 
 interface IRootProps {
 
@@ -34,7 +32,8 @@ interface IRootProps {
 export default function Root(props: IRootProps): JSX.Element | null {
 
   const [isWorking, setWorking] = React.useState<{ isWorking: boolean, message: string | null }>({ isWorking: false, message: null });
-  const [loggedInUser, setLoggedInUser] = React.useState<IUserDTO | null | undefined>(undefined);
+  const { loggedInUser, setLoggedInUser } = React.useContext(UserContext);
+  // const [loggedInUser, setLoggedInUser] = React.useState<IUserDTO | null | undefined>(undefined);
 
   const nav = useNavigate();
 
@@ -104,7 +103,7 @@ export default function Root(props: IRootProps): JSX.Element | null {
   return (
     <>
       <WorkingOverlay isWorking={isWorking.isWorking} message={isWorking.message} />
-      <Nav user={loggedInUser} />
+      <Nav />
       <main>
         <Routes>
           <Route path={'/dev'} element={<DevPage setWorking={handleSetWorking} />} />

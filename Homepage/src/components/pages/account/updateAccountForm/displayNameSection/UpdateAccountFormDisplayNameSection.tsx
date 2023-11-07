@@ -2,6 +2,7 @@ import * as React from 'react';
 import './UpdateAccountFormDisplayNameSection.css'
 import { IUpdateDisplayNameRequest } from '../../../../../types/api/requests/updateUser/updateDisplayNameRequest';
 import { IApiResponse } from '../../../../../types/api/apiResponse';
+import { UserContext } from '../../../../../contexts/userContext/UserContext';
 
 interface IUpdateAccountFormDisplayNameSectionProps {
   submit: (request: IUpdateDisplayNameRequest) => Promise<IApiResponse>
@@ -14,6 +15,8 @@ interface IUpdateAccountFormDisplayNameSectionProps {
 * @returns {JSX.Element | null}
 */
 export default function UpdateAccountFormDisplayNameSection(props: IUpdateAccountFormDisplayNameSectionProps): JSX.Element | null {
+
+  const { setLoggedInUser } = React.useContext(UserContext);
 
   const [isDisplayNameChosen, setDisplayNameChosen] = React.useState<boolean>(props.isDisplayNameChosen);
   const [request, setRequest] = React.useState<IUpdateDisplayNameRequest>({
@@ -51,6 +54,15 @@ export default function UpdateAccountFormDisplayNameSection(props: IUpdateAccoun
     } else {
       setMessage(`Success! Your display name is now ${request.displayName}#${request.tag}!`);
       setDisplayNameChosen(true);
+      setLoggedInUser(u => {
+        if (u == null) return u;
+        return {
+          ...u,
+          displayName: request.displayName,
+          tag: request.tag,
+          isDisplayNameChosen: true
+        }
+      });
     }
   }
 

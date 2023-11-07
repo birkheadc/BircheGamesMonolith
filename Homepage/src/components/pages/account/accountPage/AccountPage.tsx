@@ -32,7 +32,6 @@ export default function AccountPage(props: IAccountPageProps): JSX.Element | nul
   const submitUpdateUserRequest = async (request: IUpdateDisplayNameRequest): Promise<IApiResponse> => {
     props.setWorking(true, "Updating");
     const response = await api.user.changeDisplayName(props.token, request);
-    console.log(response);
     props.setWorking(false, null);
     return response;
   }
