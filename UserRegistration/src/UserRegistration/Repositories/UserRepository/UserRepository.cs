@@ -26,7 +26,7 @@ public class UserRepository : IUserRepository
     {
       // As far as the rest of the pipeline is concerned, the Email Address was unique. We do not let the user know when they
       // attempt to use an already in-use Email Address, as this can allow attackers to build a list of used Email Addresses.
-      // Instead, we just alert the user who is already registered  that someone is trying to use their Email Address.
+      // Instead, we just alert the user who is already registered that someone is trying to use their Email Address.
       // If there are no other errors, the new user will think their form was submitted successfully, and be prompted to check their Email.
 
       // Todo: Logging

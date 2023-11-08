@@ -23,6 +23,10 @@ public class UserValidator
 
   public UserValidator WithEmailAddress(string emailAddress)
   {
+    if (emailAddress.Contains(' '))
+    {
+      _errors.Add(new(){ Field = "EmailAddress", StatusCode = 422, Message = "Email Address cannot contain spaces." });
+    }
     try
     {
       MailAddress mailAddress = new(emailAddress);
