@@ -71,7 +71,7 @@ export default function UpdateAccountFormDisplayNameSection(props: IUpdateAccoun
       {message && <span className='error standard-form-message'>{message}</span>}
       <h2>Display Name</h2>
       <div className='form-row'>
-      <div className={`label-input-wrapper${isDisplayNameChosen ? ' disabled' : ''}`}>
+        <div className={`label-input-wrapper${isDisplayNameChosen ? ' disabled' : ''}`}>
           <label htmlFor='display-name'>Display Name</label>
           <input disabled={isDisplayNameChosen} className='text-align-right' id='display-name' name='displayName' onChange={handleChange} value={request.displayName}></input>
         </div>

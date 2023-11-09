@@ -9,6 +9,7 @@
   --clr-accent-b: #347FC4;
   
   --box-shadow-pri: 2px 2px 5px var(--clr-black);
+  --box-shadow-sec: 0px 0px 0px var(--clr-black);
 
   --border-pri: solid 1px black;
 }

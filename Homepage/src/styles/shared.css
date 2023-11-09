@@ -52,6 +52,7 @@ a:hover, a:focus {
   width: 100%;
   height: fit-content;
   padding-top: 1rem;
+  gap:10px;
 }
 
 ul.standard-form-errors {
@@ -124,10 +125,16 @@ button {
   border: var(--border-pri);
   padding: 0.3em 0.6em;
   user-select: none;
+  transition: box-shadow 50ms ease;
 }
 
 button:focus, button:hover {
   box-shadow: var(--box-shadow-pri);
+}
+
+button:active {
+  box-shadow: var(--box-shadow-sec);
+  scale: 0.98;
 }
 
 button:disabled {

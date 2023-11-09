@@ -20,6 +20,7 @@ import { IApiResponse } from './types/api/apiResponse';
 import DevPage from './components/pages/dev/DevPage';
 import WorkingOverlay from './components/workingOverlay/WorkingOverlay';
 import { UserContext } from './contexts/userContext/UserContext';
+import RequestPasswordChangePageRouter from './components/pages/requestPasswordChange/RequestPasswordChangePageRouter';
 
 interface IRootProps {
 
@@ -113,6 +114,7 @@ export default function Root(props: IRootProps): JSX.Element | null {
           <Route path={'email-verification/verify'} element={<VerifyEmailPage />} />
           <Route path={'/account/*'} element={<AccountPageRouter token={localStorage.getItem(SESSION_TOKEN_KEY)} setWorking={handleSetWorking} loggedInUser={loggedInUser} />} />
           <Route path={'/register'} element={<RegisterPage setWorking={handleSetWorking} sendVerificationEmail={sendVerificationEmail} />} />
+          <Route path={'/password-reset/*'} element={<RequestPasswordChangePageRouter />} />
           <Route path={'/'} element={<LandingPage />}/>
           <Route path={ '*' } element={ <Navigate replace={true} to={{ pathname: '/' }} /> } ></Route>
         </Routes>

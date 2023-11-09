@@ -4,6 +4,7 @@ import { IUserDTO } from '../../../../types/user/user';
 import UpdateAccountFormDisplayNameSection from './displayNameSection/UpdateAccountFormDisplayNameSection';
 import { IUpdateDisplayNameRequest } from '../../../../types/api/requests/updateUser/updateDisplayNameRequest';
 import { IApiResponse } from '../../../../types/api/apiResponse';
+import UpdateAccountChangePasswordSection from './changePasswordSection/UpdateAccountChangePasswordSection';
 
 interface IUpdateAccountFormProps {
   user: IUserDTO,
@@ -34,6 +35,7 @@ export default function UpdateAccountForm(props: IUpdateAccountFormProps): JSX.E
         </div>
       </div>
       <UpdateAccountFormDisplayNameSection isDisplayNameChosen={props.user.isDisplayNameChosen} request={{ displayName: props.user.displayName, tag: props.user.tag}} submit={props.updateDisplayName}/>
+      <UpdateAccountChangePasswordSection />
     </div>
   );
 }

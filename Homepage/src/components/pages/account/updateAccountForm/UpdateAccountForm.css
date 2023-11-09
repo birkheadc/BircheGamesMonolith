@@ -18,3 +18,7 @@ span.display-name-hash-sign {
   padding: 0 5px;
   background-color: var(--clr-white);
 }
+
+.update-account-form-section p {
+  padding: 10px;
+}

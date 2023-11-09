@@ -7,6 +7,7 @@ import api from '../../../../api';
 import { IApiResponse } from '../../../../types/api/apiResponse';
 import { IUpdateDisplayNameRequest } from '../../../../types/api/requests/updateUser/updateDisplayNameRequest';
 import helpers from '../../../../helpers';
+import UpdateAccountChangePasswordSection from '../updateAccountForm/changePasswordSection/UpdateAccountChangePasswordSection';
 
 interface IAccountPageProps {
   token: string | null,
