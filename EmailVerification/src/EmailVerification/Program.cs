@@ -50,7 +50,7 @@ if (app.Environment.IsDevelopment() == false)
 app.UseAuthorization();
 app.MapControllers();
 
-app.MapGet("/", () => "Welcome to running ASP.NET Core Minimal API on AWS Lambda");
+app.MapGet("/", () => "You've reached the Email Verification API.");
 
 Console.WriteLine($"Email Verification API launched in {app.Environment.EnvironmentName} mode.");
 
