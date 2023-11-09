@@ -5,5 +5,5 @@ namespace Authentication.Services;
 
 public interface ISecurityTokenService
 {
-  public Task<ActionResult<SecurityTokenWrapper>> AuthenticateUser(Credentials credentials);
+  public Task<SecurityTokenWrapper?> AuthenticateUser(Credentials credentials);
 }

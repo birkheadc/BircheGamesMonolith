@@ -18,7 +18,7 @@ public class SecurityTokenService : ISecurityTokenService
     this.passwordValidator = passwordValidator;
   }
 
-  public async Task<ActionResult<SecurityTokenWrapper>> AuthenticateUser(Credentials credentials)
+  public async Task<SecurityTokenWrapper?> AuthenticateUser(Credentials credentials)
   {
     UserEntity? user = null;
     try
@@ -30,12 +30,12 @@ public class SecurityTokenService : ISecurityTokenService
       // Todo: Logging
       Console.WriteLine("Exception when attempting to retrieve user from database.");
       Console.WriteLine(e);
-      return new StatusCodeResult(500);
+      return null;
     }
 
-    if (user == null || user.PasswordHash is null) return new StatusCodeResult(401);
+    if (user == null || user.PasswordHash is null) return null;
 
-    if (passwordValidator.Validate(credentials.Password, user.PasswordHash) == false) return new StatusCodeResult(401);
+    if (passwordValidator.Validate(credentials.Password, user.PasswordHash) == false) return null;
     
     try
     {
@@ -47,7 +47,7 @@ public class SecurityTokenService : ISecurityTokenService
       // Todo: Logging
       Console.WriteLine("Exception when attempting to create session token for user.");
       Console.WriteLine(e);
-      return new StatusCodeResult(500);
+      return null;
     }
   }
 }

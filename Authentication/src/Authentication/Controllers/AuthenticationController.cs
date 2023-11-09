@@ -29,7 +29,7 @@ public class AuthenticationController : ControllerBase
 
     try
     {
-      SecurityTokenWrapper? tokenWrapper = (await securityTokenService.AuthenticateUser(credentials)).Value;
+      SecurityTokenWrapper? tokenWrapper = await securityTokenService.AuthenticateUser(credentials);
       if (tokenWrapper is not null)
       {
         return Ok(tokenWrapper);

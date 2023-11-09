@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc.Filters;
-using Domain.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 
