@@ -16,6 +16,7 @@ for flag in "$@"
         ASPNETCORE_ENVIRONMENT=Development ASPNETCORE_URLS="http://localhost:5002" dotnet run --project ./EmailVerification/src/EmailVerification/EmailVerification.csproj &
         ASPNETCORE_ENVIRONMENT=Development ASPNETCORE_URLS="http://localhost:5003" dotnet run --project ./UpdateUser/src/UpdateUser/UpdateUser.csproj &
         ASPNETCORE_ENVIRONMENT=Development ASPNETCORE_URLS="http://localhost:5000" dotnet run --project ./UserRegistration/src/UserRegistration/UserRegistration.csproj &
+        ASPNETCORE_ENVIRONMENT=Development ASPNETCORE_URLS="http://localhost:5004" dotnet run --project ./PasswordChange/src/PasswordChange/PasswordChange.csproj &
         break
         ;;
       authentication)
@@ -38,7 +39,9 @@ for flag in "$@"
         echo "Launching User Registration Service"
         ASPNETCORE_ENVIRONMENT=Development ASPNETCORE_URLS="http://localhost:5000" dotnet run --project ./UserRegistration/src/UserRegistration/UserRegistration.csproj &
         ;;
-      
+      password-change)
+        echo "Launching Password Change Service"
+        ASPNETCORE_ENVIRONMENT=Development ASPNETCORE_URLS="http://localhost:5004" dotnet run --project ./PasswordChange/src/PasswordChange/PasswordChange.csproj &
     esac
   done
 echo ""
