@@ -40,7 +40,7 @@ public class UserValidator
   
   public UserValidator WithDisplayName(string displayName)
   {
-    if (displayName.Length == _config.DisplayNameMinChars)
+    if (displayName.Length < _config.DisplayNameMinChars)
     {
       _errors.Add(new ResponseError()
       {
@@ -60,7 +60,7 @@ public class UserValidator
       });
     }
 
-    string pattern = "^[a-zA-Z][a-zA-Z0-9_]*$";
+    string pattern = "^(?!.*__)[a-zA-Z][a-zA-Z0-9_]*$";
     bool doesMatch = Regex.IsMatch(displayName, pattern);
     if (doesMatch == false)
     {
@@ -87,7 +87,7 @@ public class UserValidator
       });
     }
 
-    string pattern = "[a-zA-Z0-9]*$";
+    string pattern = "^[a-zA-Z0-9]*$";
     bool doesMatch = Regex.IsMatch(tag, pattern);
     if (doesMatch == false)
     {
