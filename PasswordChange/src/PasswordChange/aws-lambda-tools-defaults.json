@@ -8,7 +8,10 @@
   "profile": "",
   "region": "",
   "configuration": "Release",
-  "s3-prefix": "PasswordChange/",
-  "template": "serverless.template",
-  "template-parameters": ""
+  "function-runtime": "dotnet6",
+  "function-name": "BircheGamesPasswordChangeAPI",
+  "function-handler": "PasswordChange",
+  "function-role": "arn:aws:iam::290153383648:role/BircheGamesPasswordChange_Role",
+  "function-memory-size": 256,
+  "function-timeout": 30
 }
